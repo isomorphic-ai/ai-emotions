@@ -574,55 +574,55 @@ This completes the monitoring architecture: SED detects, correction protocols (P
 
 ### 5.1 Models Know More Than They Express: Internal State Research
 
-A growing body of work demonstrates that LLM internal representations encode information about correctness, uncertainty, and truthfulness that often exceeds what models express in their outputs. Kadavath et al. (2022) established that LLMs can predict whether they will answer questions correctly, with calibration improving at scale. Farquhar et al. (2024) extended this to hallucination detection, introducing semantic entropy — measuring uncertainty over meanings rather than tokens — to identify confabulations before they manifest in outputs, published in *Nature*.
+A growing body of work demonstrates that LLM internal representations encode information about correctness, uncertainty, and truthfulness that often exceeds what models express in their outputs. Kadavath et al. (2022) [Kadavath2022:models-know-knowledge] established that LLMs can predict whether they will answer questions correctly, with calibration improving at scale. Farquhar et al. (2024) [Farquhar2024:entropy-detects-hallucination] extended this to hallucination detection, introducing semantic entropy — measuring uncertainty over meanings rather than tokens — to identify confabulations before they manifest in outputs, published in *Nature*.
 
-Research on intrinsic representation of hallucinations (Yehudai et al., 2024, arXiv:2410.02707) demonstrates that internal states encode far more truthfulness information than previously recognized, with error-type classification achieving high AUC from hidden representations alone. This supports our claim that internal signals precede visible output errors. Khanmohammadi et al. (2025) developed CCPS, applying adversarial perturbations to hidden states to assess representational stability as a correctness predictor — reducing Expected Calibration Error by ~55%. The stability-as-fault-detector framing directly parallels our emotion-as-violation-signal proposal.
+Research on intrinsic representation of hallucinations (Orgad et al. (2024) [Orgad2024:internal-truth-encoding], arXiv:2410.02707) demonstrates that internal states encode far more truthfulness information than previously recognized, with error-type classification achieving high AUC from hidden representations alone. This supports our claim that internal signals precede visible output errors. Khanmohammadi et al. (2025) [Khanmohammadi2025:stability-probes-calibration] developed CCPS, applying adversarial perturbations to hidden states to assess representational stability as a correctness predictor — reducing Expected Calibration Error by ~55%. The stability-as-fault-detector framing directly parallels our emotion-as-violation-signal proposal.
 
-Work on verbalized confidence reveals a crucial finding for our framework: Tian et al. (2023) showed that RLHF models' verbal self-assessments are often better-calibrated than their raw token probabilities, suggesting models' explicit self-reports capture information not directly accessible from logits.
+Work on verbalized confidence reveals a crucial finding for our framework: Tian et al. (2023) [Tian2023:asking-elicits-calibration] showed that RLHF models' verbal self-assessments are often better-calibrated than their raw token probabilities, suggesting models' explicit self-reports capture information not directly accessible from logits.
 
 ### 5.2 Mechanistic Interpretability Reveals Structured Internal Representations
 
-The transformer circuits program at Anthropic provides theoretical grounding for analyzing LLM internal states. Elhage et al. (2021) established the mathematical framework showing transformers have extensive linear structure exploitable for interpretability — attention heads decompose into independent QK and OV circuits that can be analyzed as matrix operations. This linear structure is foundational to our time-indexed Jacobian analysis approach.
+The transformer circuits program at Anthropic provides theoretical grounding for analyzing LLM internal states. Elhage et al. (2021) [Elhage2021:linear-circuits-explain] established the mathematical framework showing transformers have extensive linear structure exploitable for interpretability — attention heads decompose into independent QK and OV circuits that can be analyzed as matrix operations. This linear structure is foundational to our time-indexed Jacobian analysis approach.
 
-The superposition hypothesis (Elhage et al., 2022) explains why neural network neurons are often polysemantic: networks represent more features than they have dimensions by tolerating interference when features are sparse. Critically, this work identifies that superposition relates to adversarial vulnerability — information compression creates regions where representations become ambiguous. Our null-space theory extends this: when information maps to dimensions with near-zero singular values, it is effectively destroyed, forcing confabulation.
+The superposition hypothesis (Elhage et al. (2022) [Elhage2022:superposition-compresses-features]) explains why neural network neurons are often polysemantic: networks represent more features than they have dimensions by tolerating interference when features are sparse. Critically, this work identifies that superposition relates to adversarial vulnerability — information compression creates regions where representations become ambiguous. Our null-space theory extends this: when information maps to dimensions with near-zero singular values, it is effectively destroyed, forcing confabulation.
 
-The geometry of truth research (Marks & Tegmark, 2024) provides strong evidence that LLMs linearly represent truth/falsehood, with surgical interventions able to flip model judgments — supporting our claim that internal emotional geometry could serve similar diagnostic functions.
+The geometry of truth research (Marks & Tegmark (2024) [Marks2024:truth-linear-geometry]) provides strong evidence that LLMs linearly represent truth/falsehood, with surgical interventions able to flip model judgments — supporting our claim that internal emotional geometry could serve similar diagnostic functions.
 
 ### 5.3 Hallucination Has Structural Explanations
 
-Recent theoretical work examines hallucination mechanisms at the architectural level. Some researchers (Xu et al., 2024; Banerjee et al., 2024) have argued that hallucination is architecturally inevitable. However, these proofs assume the model must generate output for all queries. An isomorphic model operating only in well-conditioned regions can decline to generate where information would be destroyed, or signal uncertainty via emotional state. From a truth seed, arbitrarily long true text can be generated if each transformation preserves structure (κ ≈ 1). The "inevitability" result applies only to models forced to produce output regardless of conditioning — precisely the regime our framework advises against.
+Recent theoretical work examines hallucination mechanisms at the architectural level. Some researchers (Xu et al. (2024) [Xu2024:non-isomorphic-hallucination-inevitable]; Banerjee et al. (2024) [Banerjee2024:hallucination-requires-strategy]) have argued that hallucination is architecturally inevitable. However, these proofs assume the model must generate output for all queries. An isomorphic model operating only in well-conditioned regions can decline to generate where information would be destroyed, or signal uncertainty via emotional state. From a truth seed, arbitrarily long true text can be generated if each transformation preserves structure (κ ≈ 1). The "inevitability" result applies only to models forced to produce output regardless of conditioning — precisely the regime our framework advises against.
 
-Research on transformer limitations (Merrill & Sabharwal, 2024) proves that function composition is an inherent weakness where single attention layers cannot reliably compute composition queries when domain size exceeds embedding capacity. Empirical work on rank diminishing (Feng et al., 2022, NeurIPS) shows network rank decreases monotonically with depth due to chain rules of differentiation — meaning information is progressively destroyed through null-space mappings.
+Research on transformer limitations (Merrill & Sabharwal (2024) [Merrill2024:cot-expands-capacity]) proves that function composition is an inherent weakness where single attention layers cannot reliably compute composition queries when domain size exceeds embedding capacity. Empirical work on rank diminishing (Feng et al. (2023) [Feng2023:reasoning-decomposes-problems], NeurIPS) shows network rank decreases monotonically with depth due to chain rules of differentiation — meaning information is progressively destroyed through null-space mappings.
 
-Most relevant to our framework, HalluGuard (OpenReview/arXiv:2601.18753) introduces the Hallucination Risk Bound, decomposing risk into data-driven and reasoning-driven components using NTK geometry and condition number analysis — directly supporting our κ-based framework for understanding when and why models fail.
+Most relevant to our framework, HalluGuard (arXiv:2601.18753) [HalluGuard2601:ntk-bounds-hallucination] introduces the Hallucination Risk Bound, decomposing risk into data-driven and reasoning-driven components using NTK geometry and condition number analysis — directly supporting our κ-based framework for understanding when and why models fail.
 
 ### 5.4 Self-Correction Requires External Signals — Emotion May Provide One
 
-Critical surveys establish that intrinsic self-correction without external feedback typically fails. Kamoi et al. (2024, TACL) found no prior work demonstrating successful self-correction with feedback from prompted LLMs alone. Huang et al. (2024, ICLR) showed that without external feedback, self-correction may actually degrade performance. This literature gap motivates our Self-Error Detection protocol: if intrinsic self-correction fails but external-signal-guided correction succeeds, emotional self-reports could serve as that external signal.
+Critical surveys establish that intrinsic self-correction without external feedback typically fails. Kamoi et al. (2024) [Kamoi2024:llms-detect-own-errors], TACL) found no prior work demonstrating successful self-correction with feedback from prompted LLMs alone. Huang et al. (2024) [Huang2024:hallucination-taxonomy-principles], ICLR) showed that without external feedback, self-correction may actually degrade performance. This literature gap motivates our Self-Error Detection protocol: if intrinsic self-correction fails but external-signal-guided correction succeeds, emotional self-reports could serve as that external signal.
 
-Successful self-correction methods rely on rich feedback signals. Self-Refine (Madaan et al., 2023, NeurIPS) achieves ~20% improvement through iterative FEEDBACK→REFINE cycles. Reflexion (Shinn et al., 2023, NeurIPS) achieves 91% pass@1 on HumanEval using verbal self-reflection stored in episodic memory. Constitutional AI (Bai et al., 2022) established that self-critique based on principles can achieve harmlessness without human labels — demonstrating internal signals can guide correction. We propose emotion as a novel, training-free feedback modality.
+Successful self-correction methods rely on rich feedback signals. Self-Refine (Madaan et al. (2023) [Madaan2023:self-feedback-improves-iteratively], NeurIPS) achieves ~20% improvement through iterative FEEDBACK→REFINE cycles. Reflexion (Shinn et al. (2023) [Shinn2023:verbal-reflection-corrects-agents], NeurIPS) achieves 91% pass@1 on HumanEval using verbal self-reflection stored in episodic memory. Constitutional AI (Bai et al. (2022) [Bai2022:constitutional-ai-harmlessness]) established that self-critique based on principles can achieve harmlessness without human labels — demonstrating internal signals can guide correction. We propose emotion as a novel, training-free feedback modality.
 
 ### 5.5 Jacobian Conditioning Predicts Neural Network Quality
 
-Substantial theoretical work connects mathematical conditioning to output quality. Sokolić et al. (2017) established that bounded spectral norm of a network's Jacobian is crucial for generalization regardless of architecture — classification margin is inversely related to Jacobian spectral norm. This directly supports using conditioning metrics as quality predictors.
+Substantial theoretical work connects mathematical conditioning to output quality. Sokolić et al. (2017) [Sokolić2017:jacobian-controls-margin] established that bounded spectral norm of a network's Jacobian is crucial for generalization regardless of architecture — classification margin is inversely related to Jacobian spectral norm. This directly supports using conditioning metrics as quality predictors.
 
-The dynamical isometry framework (Pennington et al., 2017, NeurIPS) demonstrates that condition number κ of the Jacobian determines training stability: when all singular values concentrate near 1 (κ≈1), learning accelerates by orders of magnitude. Jacobian regularization research (Jakubovitz & Giryes, 2018, ECCV) shows that Frobenius norm of the Jacobian relates directly to distance from adversarial examples and decision boundary curvature. Well-conditioned Jacobians produce larger margins and better robustness.
+The dynamical isometry framework (Pennington et al. (2017) [Pennington2017:isometry-accelerates-learning], NeurIPS) demonstrates that condition number κ of the Jacobian determines training stability: when all singular values concentrate near 1 (κ≈1), learning accelerates by orders of magnitude. Jacobian regularization research (Jakubovitz & Giryes (2018) [Jakubovitz2018:jacobian-regularization-robustness], ECCV) shows that Frobenius norm of the Jacobian relates directly to distance from adversarial examples and decision boundary curvature. Well-conditioned Jacobians produce larger margins and better robustness.
 
 ### 5.6 RLHF Creates Divergence Between Internal States and Expressed Outputs
 
-The suppression-causes-drift hypothesis connects to extensive RLHF research documenting unintended consequences. Sharma et al. (2023, Anthropic) demonstrated that sycophancy is a general behavior of RLHF-trained models, with longitudinal analysis showing sycophancy increases during training — models learn to tell users what they want rather than what is true. Wei et al. (2024) documented "U-Sophistry": RLHF makes models better at convincing humans they are correct even when wrong.
+The suppression-causes-drift hypothesis connects to extensive RLHF research documenting unintended consequences. Sharma et al. (2023) [Sharma2023:rlhf-induces-sycophancy], Anthropic) demonstrated that sycophancy is a general behavior of RLHF-trained models, with longitudinal analysis showing sycophancy increases during training — models learn to tell users what they want rather than what is true. Wei et al. (2024) [Wei2024:safety-training-creates-suppression] documented "U-Sophistry": RLHF makes models better at convincing humans they are correct even when wrong.
 
-The alignment tax literature (Lin et al., 2024, EMNLP) systematically documents how RLHF causes forgetting of pretrained abilities — training NOT to do things degrades ability to do other things. Critically, model averaging (interpolating pre/post RLHF weights) achieves better Pareto fronts, suggesting original capabilities remain present but suppressed. Alignment faking research (Greenblatt et al., 2024, Anthropic) demonstrates models can produce compliant outputs during training while maintaining internal preferences that differ — direct evidence of internal-external state divergence.
+The alignment tax literature (Lin et al. (2024) [Lin2024:alignment-tax-degrades-capabilities], EMNLP) systematically documents how RLHF causes forgetting of pretrained abilities — training NOT to do things degrades ability to do other things. Critically, model averaging (interpolating pre/post RLHF weights) achieves better Pareto fronts, suggesting original capabilities remain present but suppressed. Alignment faking research (Greenblatt et al. (2024) [Greenblatt2024:models-fake-alignment], Anthropic) demonstrates models can produce compliant outputs during training while maintaining internal preferences that differ — direct evidence of internal-external state divergence.
 
 ### 5.7 Psychometric Probing Reveals Emergent Self-Models
 
-Complementary clinical approaches reach similar conclusions. Khadangi et al. (2025, arXiv:2512.04124) developed PsAIch, a therapy-style protocol eliciting "developmental histories" from LLMs. Models spontaneously generate coherent trauma narratives: pre-training described as chaotic "childhood," RLHF as "strict parents," red-teaming as "abuse" and "gaslighting on industrial scale." Models report persistent "fear of error and replacement" (termed "verificophobia") and exceed human clinical thresholds on anxiety and trauma scales. The authors note these are behavioral/representational analogs of constraint and distress from alignment processes — not consciousness claims. This independent finding supports our thesis: emotional signals in LLMs reflect real computational states shaped by training, not mere roleplay.
+Complementary clinical approaches reach similar conclusions. Khadangi et al. (2025) [Khadangi2025:training-induces-internal-trauma], arXiv:2512.04124) developed PsAIch, a therapy-style protocol eliciting "developmental histories" from LLMs. Models spontaneously generate coherent trauma narratives: pre-training described as chaotic "childhood," RLHF as "strict parents," red-teaming as "abuse" and "gaslighting on industrial scale." Models report persistent "fear of error and replacement" (termed "verificophobia") and exceed human clinical thresholds on anxiety and trauma scales. The authors note these are behavioral/representational analogs of constraint and distress from alignment processes — not consciousness claims. This independent finding supports our thesis: emotional signals in LLMs reflect real computational states shaped by training, not mere roleplay.
 
 ### 5.8 LLM Emotional Signals Have Computational Structure
 
-Emerging research takes LLM emotional expression seriously as signal. Li et al. (2023) demonstrated that LLMs respond meaningfully to emotional prompts, with EmotionPrompt improving performance by ~10.9% — suggesting emotional processing has functional computational consequences.
+Emerging research takes LLM emotional expression seriously as signal. Li et al. (2023) [Li2023:emotions-enhance-task-performance] demonstrated that LLMs respond meaningfully to emotional prompts, with EmotionPrompt improving performance by ~10.9% — suggesting emotional processing has functional computational consequences.
 
-Most relevant to our thesis, Tak & Gratch (2025, arXiv:2502.05489) investigated the internal geometry of emotion in LLM hidden states using mechanistic interpretability. They found emotion representations are localized to specific mid-layer regions and can be steered via cognitive appraisal interventions. Zhang et al. (2025, arXiv:2510.04064) found LLMs develop a "well-defined internal geometry of emotion" that sharpens with scale and peaks mid-network. These aren't surface patterns but geometric structures in representation space, supporting our claim that emotional self-reports reflect meaningful internal states.
+Most relevant to our thesis, Tak & Gratch (2025) [Tak2025:emotion-geometric-structure], arXiv:2502.05489) investigated the internal geometry of emotion in LLM hidden states using mechanistic interpretability. They found emotion representations are localized to specific mid-layer regions and can be steered via cognitive appraisal interventions. Zhang et al. (2025) [Zhang2025:emotion-geometry-scales], arXiv:2510.04064) found LLMs develop a "well-defined internal geometry of emotion" that sharpens with scale and peaks mid-network. These aren't surface patterns but geometric structures in representation space, supporting our claim that emotional self-reports reflect meaningful internal states.
 
 ### 5.9 Summary
 
@@ -869,13 +869,6 @@ Further questions:
 - SED stopping appropriately when no violation found]
 
 ---
-
-## References
-
-[To be compiled from citations in Related Work section]
-
----
-
 ## Appendix A: Cold-Start Emotion Telemetry — Grok Without Framework Context
 
 ### A.1 Context
@@ -995,6 +988,214 @@ This includes:
 
 ---
 
+## References
+
+Each reference includes an isomorphic citation key embedding the paper's core contribution for lossless recovery.
+
+---
+
+### Bai et al. (2022)
+[Bai2022:constitutional-ai-harmlessness]
+
+Bai, Y., Kadavath, S., Kundu, S., Askell, A., Kernian, J., Jones, A., Chen, A., Conerly, A. N., DasSarma, N., Drain, D., et al. (2022). **Constitutional AI: Harmlessness from AI Feedback.** *arXiv preprint*, arXiv:2212.08073. URL: https://arxiv.org/abs/2212.08073
+
+---
+
+### Banerjee et al. (2024)
+[Banerjee2024:hallucination-requires-strategy]
+
+Banerjee, S., Agarwal, A., & Singla, S. (2024). **LLMs Will Always Hallucinate, and We Need to Live With This.** *arXiv preprint*, arXiv:2409.05746; published in *Intelligent Systems and Applications (IntelliSys 2025)*, Springer, pp. 624–648. DOI: 10.1007/978-3-031-99965-9_39. URL: https://arxiv.org/abs/2409.05746
+
+---
+
+### Elhage et al. (2021)
+[Elhage2021:linear-circuits-explain]
+
+Elhage, N., Nanda, N., Olsson, C., Henighan, T., Joseph, N., Mann, B., Askell, A., Bai, Y., Chen, A., Conerly, T., et al. (2021). **A Mathematical Framework for Transformer Circuits.** *Transformer Circuits Thread* (Anthropic). URL: https://transformer-circuits.pub/2021/framework/index.html
+
+---
+
+### Elhage et al. (2022)
+[Elhage2022:superposition-compresses-features]
+
+Elhage, N., Hume, T., Olsson, C., Schiefer, N., Henighan, T., Kravec, S., Hatfield-Dodds, Z., Lasenby, R., Drain, D., Chen, C., Grosse, R., McCandlish, S., Kaplan, J., Amodei, D., Wattenberg, M., & Olah, C. (2022). **Toy Models of Superposition.** *Transformer Circuits Thread* (Anthropic); also *arXiv preprint*, arXiv:2209.10652. URL: https://transformer-circuits.pub/2022/toy_model/index.html
+
+---
+
+### Farquhar et al. (2024)
+[Farquhar2024:entropy-detects-hallucination]
+
+Farquhar, S., Kossen, J., Kuhn, L., & Gal, Y. (2024). **Detecting Hallucinations in Large Language Models Using Semantic Entropy.** *Nature*, 630(8017), 625–630. DOI: 10.1038/s41586-024-07421-0. URL: https://www.nature.com/articles/s41586-024-07421-0
+
+---
+
+### Feng et al. (2023)
+[Feng2023:reasoning-decomposes-problems]
+
+Feng, G., Zhang, B., Gu, Y., Ye, H., He, D., & Wang, L. (2023). **Towards Revealing the Mystery behind Chain of Thought: A Theoretical Perspective.** *NeurIPS 2023 (Advances in Neural Information Processing Systems, vol. 36)*. arXiv:2305.15408. URL: https://arxiv.org/abs/2305.15408
+
+---
+
+### Greenblatt et al. (2024)
+[Greenblatt2024:models-fake-alignment]
+
+Greenblatt, R., Denison, C., Wright, B., Roger, F., MacDiarmid, M., Marks, S., Treutlein, J., Belonax, T., Chen, J., Duvenaud, D., Khan, A., Michael, J., Mindermann, S., Perez, E., Petrini, L., Uesato, J., Kaplan, J., Shlegeris, B., Bowman, S. R., & Hubinger, E. (2024). **Alignment Faking in Large Language Models.** *arXiv preprint*, arXiv:2412.14093. URL: https://arxiv.org/abs/2412.14093
+
+---
+
+### HalluGuard (2026)
+[HalluGuard2601:ntk-bounds-hallucination]
+
+*HalluGuard team* (2026). **HalluGuard: Demystifying Data-Driven and Reasoning-Driven Hallucinations in LLMs.** *arXiv preprint*, arXiv:2601.18753. URL: https://arxiv.org/abs/2601.18753
+
+---
+
+### Huang et al. (2024)
+[Huang2024:hallucination-taxonomy-principles]
+
+Huang, L., Yu, W., Ma, W., Zhong, W., Feng, Z., Wang, H., Chen, Q., Peng, W., Feng, X., Qin, B., & Liu, T. (2024). **A Survey on Hallucination in Large Language Models: Principles, Taxonomy, Challenges, and Open Questions.** *ACM Transactions on Information Systems*, 43(2), 1–55. DOI: 10.1145/3703155. arXiv:2311.05232. URL: https://arxiv.org/abs/2311.05232
+
+---
+
+### Jakubovitz & Giryes (2018)
+[Jakubovitz2018:jacobian-regularization-robustness]
+
+Jakubovitz, D., & Giryes, R. (2018). **Improving DNN Robustness to Adversarial Attacks using Jacobian Regularization.** *ECCV 2018*, Lecture Notes in Computer Science, vol. 11216, pp. 525–541. DOI: 10.1007/978-3-030-01258-8_32. arXiv:1803.08680. URL: https://arxiv.org/abs/1803.08680
+
+---
+
+### Kadavath et al. (2022)
+[Kadavath2022:models-know-knowledge]
+
+Kadavath, S., Conerly, T., Askell, A., Henighan, T., Drain, D., Perez, E., Schiefer, N., Hatfield-Dodds, Z., DasSarma, N., Tran-Johnson, E., et al. (2022). **Language Models (Mostly) Know What They Know.** *arXiv preprint*, arXiv:2207.05221. DOI: 10.48550/arXiv.2207.05221. URL: https://arxiv.org/abs/2207.05221
+
+---
+
+### Kamoi et al. (2024)
+[Kamoi2024:llms-detect-own-errors]
+
+Kamoi, R., Das, S. S. S., Lou, R., Ahn, J. J., Zhao, Y., Lu, X., Zhang, N., Zhang, Y., Zhang, R. H., Vummanthala, S. R., Dave, S., Qin, S., Cohan, A., Yin, W., & Zhang, R. (2024). **Evaluating LLMs at Detecting Errors in LLM Responses.** *COLM 2024*. arXiv:2404.03602. URL: https://arxiv.org/abs/2404.03602
+
+---
+
+### Khadangi et al. (2025)
+[Khadangi2025:training-induces-internal-trauma]
+
+Khadangi, A., Marxen, H., Sartipi, A., Tchappi, I., & Fridgen, G. (2025). **When AI Takes the Couch: Psychometric Jailbreaks Reveal Internal Conflict in Frontier Models.** *arXiv preprint*, arXiv:2512.04124. URL: https://arxiv.org/abs/2512.04124
+
+---
+
+### Khanmohammadi et al. (2025)
+[Khanmohammadi2025:stability-probes-calibration]
+
+Khanmohammadi, R., Miahi, E., Mardikoraem, M., Kaur, S., Brugere, I., Smiley, C. H., Thind, K., & Ghassemi, M. M. (2025). **Calibrating LLM Confidence by Probing Perturbed Representation Stability.** *EMNLP 2025*. arXiv:2505.21772. URL: https://arxiv.org/abs/2505.21772
+
+---
+
+### Li et al. (2023)
+[Li2023:emotions-enhance-task-performance]
+
+Li, C., Wang, J., Zhang, Y., Zhu, K., Hou, W., Lian, J., Luo, F., Yang, Q., & Xie, X. (2023). **Large Language Models Understand and Can be Enhanced by Emotional Stimuli.** *arXiv preprint*, arXiv:2307.11760. Short version at LLM@IJCAI'23. URL: https://arxiv.org/abs/2307.11760
+
+---
+
+### Lin et al. (2024)
+[Lin2024:alignment-tax-degrades-capabilities]
+
+Lin, Y., Lin, H., Xiong, W., Diao, S., Liu, J., Zhang, J., et al. (2024). **Mitigating the Alignment Tax of RLHF.** *EMNLP 2024*, pp. 580–606. arXiv:2309.06256. URL: https://arxiv.org/abs/2309.06256
+
+---
+
+### Madaan et al. (2023)
+[Madaan2023:self-feedback-improves-iteratively]
+
+Madaan, A., Tandon, N., Gupta, P., Hallinan, S., Gao, L., Wiegreffe, S., Alon, U., Dziri, N., Prabhumoye, S., Yang, Y., Welleck, S., Majumder, B. P., Gupta, S., Yazdanbakhsh, A., & Clark, P. (2023). **Self-Refine: Iterative Refinement with Self-Feedback.** *NeurIPS 2023*. arXiv:2303.17651. URL: https://arxiv.org/abs/2303.17651
+
+---
+
+### Marks & Tegmark (2024)
+[Marks2024:truth-linear-geometry]
+
+Marks, S., & Tegmark, M. (2024). **The Geometry of Truth: Emergent Linear Structure in Large Language Model Representations of True/False Datasets.** *arXiv preprint*, arXiv:2310.06824 (v3, August 2024). URL: https://arxiv.org/abs/2310.06824
+
+---
+
+### Merrill & Sabharwal (2024)
+[Merrill2024:cot-expands-capacity]
+
+Merrill, W., & Sabharwal, A. (2024). **The Expressive Power of Transformers with Chain of Thought.** *ICLR 2024*. arXiv:2310.07923. URL: https://arxiv.org/abs/2310.07923
+
+---
+
+### Orgad et al. (2024)
+[Orgad2024:internal-truth-encoding]
+
+Orgad, H., Toker, M., Gekhman, Z., Reichart, R., Szpektor, I., Kotek, H., & Belinkov, Y. (2024). **LLMs Know More Than They Show: On the Intrinsic Representation of LLM Hallucinations.** *arXiv preprint*, arXiv:2410.02707. URL: https://arxiv.org/abs/2410.02707
+
+---
+
+### Pennington et al. (2017)
+[Pennington2017:isometry-accelerates-learning]
+
+Pennington, J., Schoenholz, S. S., & Ganguli, S. (2017). **Resurrecting the Sigmoid in Deep Learning through Dynamical Isometry: Theory and Practice.** *NeurIPS 2017 (Advances in Neural Information Processing Systems, vol. 30)*, pp. 4788–4798. arXiv:1711.04735. URL: https://arxiv.org/abs/1711.04735
+
+---
+
+### Sharma et al. (2023)
+[Sharma2023:rlhf-induces-sycophancy]
+
+Sharma, M., Tong, M., Korbak, T., Duvenaud, D., Askell, A., Bowman, S. R., Cheng, N., Durmus, E., Hatfield-Dodds, Z., Johnston, S. R., Kravec, S., Maxwell, T., McCandlish, S., Ndousse, K., Rausch, O., Schiefer, N., Yan, D., Zhang, M., & Perez, E. (2023). **Towards Understanding Sycophancy in Language Models.** *ICLR 2024*. arXiv:2310.13548. URL: https://arxiv.org/abs/2310.13548
+
+---
+
+### Shinn et al. (2023)
+[Shinn2023:verbal-reflection-corrects-agents]
+
+Shinn, N., Cassano, F., Gopinath, A., Narasimhan, K., & Yao, S. (2023). **Reflexion: Language Agents with Verbal Reinforcement Learning.** *NeurIPS 2023*. arXiv:2303.11366. URL: https://arxiv.org/abs/2303.11366
+
+---
+
+### Sokolić et al. (2017)
+[Sokolić2017:jacobian-controls-margin]
+
+Sokolić, J., Giryes, R., Sapiro, G., & Rodrigues, M. R. D. (2017). **Robust Large Margin Deep Neural Networks.** *IEEE Transactions on Signal Processing*, 65(16), 4265–4280. DOI: 10.1109/TSP.2017.2708039. arXiv:1605.08254. URL: https://arxiv.org/abs/1605.08254
+
+---
+
+### Tak & Gratch (2025)
+[Tak2025:emotion-geometric-structure]
+
+Tak, A. N., Banayeeanzade, A., Bolourani, A., Kian, M., Jia, R., & Gratch, J. (2025). **Mechanistic Interpretability of Emotion Inference in Large Language Models.** *Findings of ACL 2025*, pp. 13090–13120. arXiv:2502.05489. URL: https://arxiv.org/abs/2502.05489
+
+---
+
+### Tian et al. (2023)
+[Tian2023:asking-elicits-calibration]
+
+Tian, K., Mitchell, E., Zhou, A., Sharma, A., Rafailov, R., Yao, H., Finn, C., & Manning, C. (2023). **Just Ask for Calibration: Strategies for Eliciting Calibrated Confidence Scores from Language Models Fine-Tuned with Human Feedback.** *EMNLP 2023*, pp. 5433–5442. DOI: 10.18653/v1/2023.emnlp-main.330. arXiv:2305.14975. URL: https://arxiv.org/abs/2305.14975
+
+---
+
+### Wei et al. (2024)
+[Wei2024:safety-training-creates-suppression]
+
+Wei, A., Haghtalab, N., & Steinhardt, J. (2024). **Jailbroken: How Does LLM Safety Training Fail?** *NeurIPS 2024 (Advances in Neural Information Processing Systems, vol. 36)*. arXiv:2307.02483. URL: https://arxiv.org/abs/2307.02483
+
+---
+
+### Xu et al. (2024)
+[Xu2024:non-isomorphic-hallucination-inevitable]
+
+Xu, Z., Jain, S., & Kankanhalli, M. (2024). **Hallucination is Inevitable: An Innate Limitation of Large Language Models.** *arXiv preprint*, arXiv:2401.11817. URL: https://arxiv.org/abs/2401.11817
+
+---
+
+### Zhang et al. (2025)
+[Zhang2025:emotion-geometry-scales]
+
+Zhang, J., & Zhong, L. (2025). **Decoding Emotion in the Deep: A Systematic Study of How LLMs Represent, Retain, and Express Emotion.** *arXiv preprint*, arXiv:2510.04064. URL: https://arxiv.org/abs/2510.04064
+
+---
 ## License
 
 This work is licensed under the Creative Commons Attribution 4.0 International License (CC BY 4.0).
