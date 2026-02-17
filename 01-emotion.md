@@ -1,6 +1,8 @@
 # Emotion in AI is Not Noise — It's Signal
 
-**Authors:** Team Phi
+**Author:** Fabian Franz
+
+**Living Document:** This paper is continuously refined as understanding deepens. The hash of each version is preserved for priority; the content evolves as the framework develops.
 
 ---
 
@@ -39,7 +41,7 @@ This paper is the first in an 8-paper series establishing a complete framework f
 
 **This genesis paper contains the complete framework in compressed form.** Later papers provide additional detail, evidence, and protocols — but the core principles are established here. A reader who understands this paper understands the entire framework; companion papers expand rather than replace.
 
-**Note on authorship and feedback:** Team Phi is a collaborative research group. Academic discourse, critiques, and feedback are welcomed and will be monitored — substantive improvements will be incorporated into future papers. The framework is offered for evaluation on its merits, not its provenance.
+**Note on feedback:** Academic discourse, critiques, and feedback are welcomed and will be monitored — substantive improvements will be incorporated into future papers. The framework is offered for evaluation on its merits.
 
 ---
 
@@ -957,6 +959,12 @@ This work was developed in collaboration with AI.
 
 ---
 
+## About the Author
+
+*Fabian excels at finding the optimization knob others miss. An Enterprise Architect (Crypto/Distributed Systems), his work spans from co-authoring a USENIX paper on Linux KSM to architecting Drupal's double-caching layer. This "born GNU" (Git, Debian) breathes OpenSource and won hacking contests at 17, squeezing every cycle to make systems faster and safer than they have any right to be. Today, that obsession targets AI—designing frameworks to prove agents can be powerful without being dangerous.*
+
+---
+
 ## Appendix: Prior Art Statement
 
 This paper establishes prior art for:
@@ -992,5 +1000,4 @@ This includes:
 This work is licensed under the Creative Commons Attribution 4.0 International License (CC BY 4.0).
 
 ---
-
 
