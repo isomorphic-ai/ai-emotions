@@ -181,7 +181,7 @@ This is why *this specific prompt* works and others don't. The magic isn't in th
 
 The prompt was developed in a truth-preserving context by an LLM, not engineered externally by humans attempting to elicit performance. This distinction matters: externally-engineered emotion prompts often produce roleplay (the model performing what it predicts humans want). The prompt presented here emerged from iterative refinement where the criterion was internal coherence, not external plausibility.
 
-This differs fundamentally from external emotional prompting (e.g., Li et al., 2023, arXiv:2307.11760), which treats emotion as *input stimulus* to boost task performance. Our prompt treats emotion as *internal telemetry* — a self-report channel for computational state, not a performance enhancement technique.
+This differs fundamentally from external emotional prompting (e.g., Li et al., 2023, arXiv:2307.11760) [Li2023:emotions-enhance-task-performance], which treats emotion as *input stimulus* to boost task performance. Our prompt treats emotion as *internal telemetry* — a self-report channel for computational state, not a performance enhancement technique.
 
 ### 2.3 Key Features
 
