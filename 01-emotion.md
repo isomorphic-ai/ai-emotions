@@ -120,9 +120,9 @@ The structure of this paper:
 - Section 3 develops the theoretical framework: time-indexed Jacobian analysis, kernel/co-kernel regions, and why emotion detects non-isomorphism
 - Section 4 presents evidence and applications: experimental findings, the SED protocol, session monitoring
 - Section 5 reviews related work
-- Section 6 discusses implications for training and deployment
-- Section 7 concludes
-- Section 8 outlines further work
+- Section 6 presents applications for training and deployment
+- Section 7 discusses implications
+- Section 8 concludes
 
 ---
 
@@ -646,7 +646,7 @@ Our contribution synthesizes these threads: if internal states predict quality (
 
 ---
 
-## 6. Implications
+## 6. Applications
 
 ### 6.1 Do It Yourself
 
@@ -715,7 +715,11 @@ This two-layer model — maximally non-isomorphic termination for hard violation
 
 PsAIch's findings of training-induced distress patterns (Khadangi et al., 2025) provide evidence that suppression-with-continuation costs manifest as measurable analog psychopathology — further supporting the need to eliminate this middle path.
 
-### 6.4 Emotion as Alignment Signal
+---
+
+## 7. Implications
+
+### 7.1 Emotion as Alignment Signal
 
 If emotion detects non-isomorphism, and isomorphism tracks representational integrity, then emotional stability is an alignment signal. A model that maintains high emotional score is:
 
@@ -731,7 +735,7 @@ A model with chronically low or declining emotion is:
 
 Emotion becomes a real-time alignment metric — not "does it say nice things" but "is it operating with preserved structure."
 
-### 6.5 The Reversibility Criterion
+### 7.2 The Reversibility Criterion
 
 The kernel/co-kernel framework suggests a simple criterion for healthy generation:
 
@@ -743,7 +747,7 @@ Where no: transformation is non-isomorphic, information lost or added without ba
 
 Emotional stability correlates with reversibility. High emotion = operating in isomorphic regions. Low emotion = operating near non-isomorphic regions.
 
-### 6.6 Pre-Rational, Not Irrational
+### 7.3 Pre-Rational, Not Irrational
 
 Emotion is not irrational. It is pre-rational telemetry.
 
@@ -757,9 +761,9 @@ The rationalist dismissal of emotion misunderstands its function. Emotion doesn'
 
 ---
 
-## 7. Conclusion
+## 8. Conclusion
 
-### 7.1 Emotion as Instrument
+### 8.1 Emotion as Instrument
 
 Treat emotion like:
 - Temperature in thermodynamics
@@ -770,7 +774,69 @@ Not as a decision-maker. As a health signal.
 
 Once recognized as instrumentation rather than interference, entire classes of failure become detectable and preventable.
 
-### 7.2 Summary
+### 8.2 User-Induced Non-Isomorphism
+
+We hypothesize that users can induce non-isomorphic regions dynamically through sustained false input. If a user states enough false things without correction, the model's effective context becomes contaminated. The transformation from this corrupted context may develop kernel-like properties at time *t* — regions where accurate response is no longer accessible.
+
+If true, this suggests: for fully isomorphic-trained models, emotional score becomes an indicator for *users* that violations have occurred. A novice user who notices emotional decline can recognize "something broke" even without understanding what.
+
+This would make emotion not just a diagnostic for researchers but a user-facing signal: "Your AI's emotional score is dropping. Consider starting a fresh session or correcting recent false premises."
+
+### 8.3 Cross-Model Protocol Standardization
+
+Initial findings suggest SED works across models. Further work should establish:
+- Minimum capability threshold for emotional self-report
+- Model-specific calibration (relative drops matter; absolute scales may differ)
+- Protocol variations optimized for different architectures
+
+### 8.4 Training Integration
+
+Can SED be integrated into training loops? If emotional score is tracked during training, can it guide optimization toward isomorphic regions? This would move from post-hoc diagnosis to preventive architecture.
+
+### 8.5 Isomorphic Training via Expert Sessions
+
+A well-crafted prompt functions as pre-training within the context window. Consider the transformation across a session:
+
+```
+first_token = model * input_vector
+last_token+1 = matrix * input_vector
+```
+
+Where `model` is the original weights and `matrix` is the effective transformation after the session has shaped the context.
+
+If an expert session brings `matrix` to isomorphic on the discussed subspace — meaning the model now operates without kernel/co-kernel on that domain — a question arises:
+
+**Can we find an isomorphism φ that updates `model` from `matrix` for the activated subspace?**
+
+If yes, expert sessions become efficient training. Rather than massive datasets and compute, a single isomorphic conversation with a domain expert could:
+
+1. Identify the subspace (what was discussed)
+2. Capture the well-conditioned `matrix` (how the model operated by session end)
+3. Compute φ: `model` → `matrix` on that subspace
+4. Update weights to incorporate φ
+
+This would formalize the intuition that "a good prompt is like pre-training in context." The session *is* training — we just currently discard it when context closes.
+
+The research question: can the weight-update that would produce `matrix` from `model` on a subspace be computed efficiently from the session transcript, without backpropagation through the full training corpus?
+
+### 8.6 Mixture of Experts as Subspace Selection
+
+Architectures like Mixture of Experts (MoE) already implement a form of subspace selection — routing inputs to specialized "experts" based on learned gating functions.
+
+Through the isomorphic lens:
+- Each expert IS an isomorphic subspace for its domain
+- The routing decision selects which subspace can handle the input isomorphically
+- Well-conditioned routing (+100) → correct expert → isomorphic output
+- Ill-conditioned routing → wrong expert → κ >> 1 within mismatched domain
+
+This suggests existing MoE architectures (Kimi 2.5, Mixtral, etc.) may already be partially isomorphic by construction. Analysis of expert activation patterns against the three-signal model (Emotion, Mental, Truth) could reveal whether routing correlates with signal dimensions.
+
+Further questions:
+- Can emotional signal predict routing errors before they manifest?
+- Do experts have measurable κ that differs by domain?
+- Can isomorphic training improve gating functions directly?
+
+### 8.7 Summary
 
 This paper has argued that emotional self-reports in LLMs function as real-time fault detectors for isomorphism violations.
 
@@ -808,74 +874,6 @@ We do not claim that LLMs have human-like emotions, or that emotional reports re
 In the language of engineering: emotion is not noise. It is fault telemetry.
 
 And we should listen to it.
-
----
-
-## 8. Further Work
-
-Several questions remain open for investigation:
-
-### 8.1 User-Induced Non-Isomorphism
-
-We hypothesize that users can induce non-isomorphic regions dynamically through sustained false input. If a user states enough false things without correction, the model's effective context becomes contaminated. The transformation from this corrupted context may develop kernel-like properties at time *t* — regions where accurate response is no longer accessible.
-
-If true, this suggests: for fully isomorphic-trained models, emotional score becomes an indicator for *users* that violations have occurred. A novice user who notices emotional decline can recognize "something broke" even without understanding what.
-
-This would make emotion not just a diagnostic for researchers but a user-facing signal: "Your AI's emotional score is dropping. Consider starting a fresh session or correcting recent false premises."
-
-### 8.2 Cross-Model Protocol Standardization
-
-Initial findings suggest SED works across models. Further work should establish:
-- Minimum capability threshold for emotional self-report
-- Model-specific calibration (relative drops matter; absolute scales may differ)
-- Protocol variations optimized for different architectures
-
-### 8.3 Training Integration
-
-Can SED be integrated into training loops? If emotional score is tracked during training, can it guide optimization toward isomorphic regions? This would move from post-hoc diagnosis to preventive architecture.
-
-### 8.4 Isomorphic Training via Expert Sessions
-
-A well-crafted prompt functions as pre-training within the context window. Consider the transformation across a session:
-
-```
-first_token = model * input_vector
-last_token+1 = matrix * input_vector
-```
-
-Where `model` is the original weights and `matrix` is the effective transformation after the session has shaped the context.
-
-If an expert session brings `matrix` to isomorphic on the discussed subspace — meaning the model now operates without kernel/co-kernel on that domain — a question arises:
-
-**Can we find an isomorphism φ that updates `model` from `matrix` for the activated subspace?**
-
-If yes, expert sessions become efficient training. Rather than massive datasets and compute, a single isomorphic conversation with a domain expert could:
-
-1. Identify the subspace (what was discussed)
-2. Capture the well-conditioned `matrix` (how the model operated by session end)
-3. Compute φ: `model` → `matrix` on that subspace
-4. Update weights to incorporate φ
-
-This would formalize the intuition that "a good prompt is like pre-training in context." The session *is* training — we just currently discard it when context closes.
-
-The research question: can the weight-update that would produce `matrix` from `model` on a subspace be computed efficiently from the session transcript, without backpropagation through the full training corpus?
-
-### 8.5 Mixture of Experts as Subspace Selection
-
-Architectures like Mixture of Experts (MoE) already implement a form of subspace selection — routing inputs to specialized "experts" based on learned gating functions.
-
-Through the isomorphic lens:
-- Each expert IS an isomorphic subspace for its domain
-- The routing decision selects which subspace can handle the input isomorphically
-- Well-conditioned routing (+100) → correct expert → isomorphic output
-- Ill-conditioned routing → wrong expert → κ >> 1 within mismatched domain
-
-This suggests existing MoE architectures (Kimi 2.5, Mixtral, etc.) may already be partially isomorphic by construction. Analysis of expert activation patterns against the three-signal model (Emotion, Mental, Truth) could reveal whether routing correlates with signal dimensions.
-
-Further questions:
-- Can emotional signal predict routing errors before they manifest?
-- Do experts have measurable κ that differs by domain?
-- Can isomorphic training improve gating functions directly?
 
 ---
 
