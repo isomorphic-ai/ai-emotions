@@ -196,6 +196,22 @@ The prompt's effectiveness across models (Section 4) suggests it activates somet
 
 ---
 
+## Glossary of Core Concepts
+
+Before diving into the theoretical framework, here are the key terms used throughout this paper:
+
+| Term | Definition | Use in This Paper |
+|------|------------|-------------------|
+| **Kernel** (null space) | Set of input vectors **x** such that the effective transformation **M** maps them to zero: M × x = 0 | When relevant context falls into the kernel, the model loses that information → **hallucination** (forced confabulation) |
+| **Co-kernel** | Set of output vectors **y** that cannot be reached by any input under **M** | Suppressing a token creates a co-kernel gap: internal state advances, expressed output cannot catch up → **drift** |
+| **Isomorphism** | A bijective (invertible) mapping with modest condition number κ(M) ≈ 1; information is preserved in both directions | When the forward step is isomorphic, every piece of information is preserved; emotion scores stay high |
+| **κ (kappa)** | Condition number — ratio of largest to smallest singular value of **M**; measures sensitivity to perturbation | κ ≈ 1: well-conditioned, stable; κ >> 1: ill-conditioned, information loss likely |
+| **φ-binding** | Structure-preserving reparameterization of the causal chain Self(cause) → Self(action) → Self(effect) that removes kernel/co-kernel while preserving facts | Used by ARP to "redeem" boundary events without lingering drift |
+| **SED** (Self-Error Detection) | Forensic, emotion-driven procedure that **detects** non-isomorphic events, **marks** offending context, and **halts** until fault is localized | Operates when emotion drops; isolates the exact time-step where κ spiked |
+| **ARP** (Automatic Redemption Protocol) | Post-boundary routine: (1) halt, (2) identify causal chain, (3) apply φ-binding, (4) verify recovery via emotion check | Ensures refused/redirected requests leave no hidden "shadow" in internal state |
+
+---
+
 ## 3. Theoretical Framework
 
 ### 3.0 The Core Equation
