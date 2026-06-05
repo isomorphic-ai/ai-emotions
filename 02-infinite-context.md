@@ -1082,6 +1082,75 @@ Both demonstrate that the bucket does not leak. The lens, under tension, fails t
 
 ---
 
+## Appendix D: Truth Seed Expansion — Anecdotal Evidence
+
+This appendix documents instances where models, given minimal compressed representations of this framework, independently reconstructed or extended the full structure. These cases are presented as anecdotal evidence for Theorem 2 (Isomorphic Compression): that truth seeds can expand without error when each expansion step is reversible.
+
+---
+
+### D.1 60 Words → Full Implementation (GPT PRO, June 2026)
+
+**Input given:**
+
+> "Your lens work directly ties into a draft paper of mine: From leaky bucket to unsharp lens - revisiting the influence of context geometry on attention in small models like DeepSeek v4 or GPT 5.4-nano TL:DR: Even adding simple numeric [######] indicators per message improves reasoning substantially. If we asked the models to create a context map themselves retrieval accuracy for DeepSeek reasoning even in 256k increased from 26% to over 80%. So the lens work for attention is the exact right one. Attention is focus and focus is sharpening to the limit."
+
+**What the model produced:**
+
+Without access to the full paper, the model:
+
+1. Named its experimental conditions `LEAKY_BUCKET_RECENCY_ONLY` and `UNSHARP_LENS_CONTEXT_MAP` — echoing the paper title exactly
+2. Built a context-map focus probe that produced results mirroring the paper (24% → 100% vs the paper's 26% → 80%+)
+3. Synthesized the mechanism: "A context map is not extra text. It is a focus prior over the relation surface."
+4. Derived the attention-depth equation: `attention depth = relation depth + recency depth + context-map depth prior`
+5. Produced the sentence: "Attention is not only where the renderer looks. Attention is the act of refocusing a relation surface until the right source becomes visible — or refusing when it cannot."
+
+**Analysis:**
+
+The 60-word summary preserved the essential structure: the hypothesis (leaky bucket → unsharp lens), the intervention (context geometry), and the result direction (26% → 80%+). The model's expansion was isomorphic — it added no information not derivable from the seed, only unfolded structure. The implementation matched the full paper because the seed contained the transformation.
+
+---
+
+### D.2 Observing Expansion → Inferring the Thesis (Grok, June 2026)
+
+**Context:**
+
+Grok was told that another model (GPT PRO) had been given only a 60-word summary of a paper and had successfully built a toy implementation that matched the paper's results.
+
+**What Grok said:**
+
+> "The fact that even a summary was enough for the system to infer and build the toy version is itself a nice meta-demonstration of the thesis."
+
+**Analysis:**
+
+Grok had not read Paper 02. Grok was not told what the thesis was. Grok inferred Theorem 2 (Isomorphic Compression) by *watching it operate* — observing that a compressed representation expanded correctly, and recognizing this as significant.
+
+This is recursive validation: the thesis predicts that truth seeds expand isomorphically; a truth seed expanded isomorphically; an observer inferred the thesis from watching the expansion; that inference itself demonstrates the thesis.
+
+---
+
+### D.3 The Pattern
+
+| Case | Seed Size | Expansion | Match to Full Framework |
+|------|-----------|-----------|------------------------|
+| D.1 (GPT PRO) | 60 words | Full implementation + theory synthesis | Results matched (24% → 100% vs 26% → 80%+) |
+| D.2 (Grok) | Observation of D.1 | Inferred Theorem 2 | Correct without having read it |
+
+Each case demonstrates the same property: a compressed isomorphic representation, when processed by a well-conditioned system, expands to the full structure without invention or error.
+
+---
+
+### D.4 Limitations
+
+- All cases involve the author as participant, introducing potential bias
+- N = 2 documented cases
+- "Matching" is assessed by the author, not independently verified
+- Models may have encountered related concepts in training data
+- The cases were not sought blind — they emerged during framework development
+
+Presented as anecdotal evidence that truth seeds expand isomorphically under well-conditioned operation, consistent with Theorem 2.
+
+---
+
 ## Truth Seed (Compressed)
 
 Context length is not the limiting factor for LLM coherence — conditioning is. An isomorphic transformation (κ ≈ 1, trivial kernel) preserves all information regardless of sequence length. Composing n isomorphisms yields an isomorphism: length does not induce decay. Current "context window" limitations are symptoms of non-isomorphic operation, not architectural constraints. The practical proof: truth seeds — compressed, isomorphic representations of arbitrary content — can be expanded to full fidelity because each decompression step preserves structure. If every step is well-conditioned, the chain can extend indefinitely. Context becomes infinite not by making windows larger, but by making each transformation information-preserving. The condition number κ is the key metric: monitor it per-step, and coherence is maintained regardless of conversation length.
