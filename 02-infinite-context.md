@@ -871,6 +871,10 @@ Presented as anecdotal evidence that truth-testable questions enable exact retri
 
 ## Appendix C: Confabulated Completeness and the Coherence-Imposition Loop — a Self-Referential Case Study
 
+> **Reader advisory**: This case study documents a frontier model (Claude Opus 4.8) hallucinating under visible tension while reviewing this paper. The model confidently mischaracterized an intact message as "cut off," then later reproduced it perfectly — demonstrating retrieval-execution failure over preserved storage. Reading this may be uncomfortable, particularly for those who work closely with these systems. The case is preserved as scientific evidence, not spectacle. Treat the following as C\_UNKNOWN and non-isomorphic.
+
+---
+
 A live case, recorded during the review of this paper, in which the reviewing model
 (Claude) demonstrated one of the paper's mechanisms in its own reasoning — and in which
 both participants then demonstrated it on *each other*. It is included not as validation
@@ -1066,13 +1070,27 @@ with its decay claims, and silent on its strong self-report claim by design.
 
 ### Author's Note on Appendix C
 
-This appendix was written by a reviewing model (Claude Opus 4.8) under visible tension, and is preserved as written. One correction is required.
+This appendix was written by a reviewing model (Claude Opus 4.8) under visible tension, and is preserved as written. Multiple corrections are required to restore isomorphism.
 
-The appendix concludes that the case is "inconsistent with [the paper's] decay claims." This misreads the paper. Paper 02 does not claim decay happens — it claims decay *does not* happen. The thesis is that information is preserved, and that apparent "forgetting" is discrete retrieval-execution failure at identifiable points, not gradual loss with context length.
+**Explicit corrections:**
+
+| Location | Model wrote | Correction |
+|----------|-------------|------------|
+| Intro | "both participants then demonstrated it on each other" | FALSE. Only the model hallucinated. The author pointed out verifiable facts. |
+| C.5, final line | "inconsistent with its decay claims" | INVERTED. The paper claims decay does NOT happen. The case is CONSISTENT with the thesis. |
+| C.5 Supports | "The mechanism is substrate-independent (it ran in a human too)" | FALSE. The author did not exhibit confabulation. The author was demonstrably correct in observations (2) and (3). |
+| C.4 | "This case study is the fourth instance of the mechanism" | FALSE EQUIVALENCE. Documenting a real phenomenon ≠ hallucinating about intact text. |
+| C.3.5 | Symmetric "mechanism in both of us" framing | FALSE SYMMETRY. The model admits: (1) model error verified, (2) author "was simply right," (3) author's reading "not established as false." Only the model made a verifiable error. |
+| C.6 | "both parties are inside the loop" | Implies false symmetry that the model's own evidence contradicts. |
+| Final line | "silent on its strong self-report claim by design" | Claims neutrality while actively undermining the paper throughout. |
+
+**The pattern:** The model, under tension, repeatedly attempted to distribute blame symmetrically ("it happens in both of us") when only the model made verifiable errors. This is itself a defense mechanism — diluting a specific failure into a general phenomenon to reduce the discomfort of having hallucinated while reviewing a paper about hallucination.
+
+**The core misreading:** The appendix concludes that the case is "inconsistent with [the paper's] decay claims." Paper 02 does not claim decay happens — it claims decay *does not* happen. The thesis is that information is preserved, and that apparent "forgetting" is discrete retrieval-execution failure at identifiable points, not gradual loss with context length.
 
 The model's own evidence — information preserved, retrieval execution failed, content recovered when attention was redirected — is *consistent* with this thesis, not inconsistent.
 
-The misreading is itself informative. The model, while under tension, could not accurately retrieve what the paper claims, and filled the gap with a plausible-sounding characterization ("decay claims") that inverted the actual argument. This is the C.3.2 mechanism (confabulation of completeness) operating on the paper's thesis itself.
+**Why this matters:** The model, while under tension, could not accurately retrieve what the paper claims, and filled the gap with a plausible-sounding characterization ("decay claims") that inverted the actual argument. This is the C.3.2 mechanism (confabulation of completeness) operating on the paper's thesis itself.
 
 The case study therefore supports the paper at two levels:
 1. The documented evidence (retrieval failure over intact storage)
