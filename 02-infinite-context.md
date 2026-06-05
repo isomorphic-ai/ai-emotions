@@ -28,204 +28,6 @@ The implication is immediate: an infinite context window that preserves informat
 
 ---
 
-## References
-
-[To be compiled]
-
----
-
-## Appendix A: Mathematical Foundations
-
-### A.1 Isomorphism Formal Definition
-
-A function f: A → B is an **isomorphism** if:
-1. f is bijective (one-to-one and onto)
-2. f preserves structure (operations in A map to corresponding operations in B)
-
-For vector spaces with linear transformations, isomorphism requires:
-- The transformation matrix has full rank
-- The condition number κ = σ_max / σ_min ≈ 1 (all singular values similar)
-
-### A.2 Condition Number and Information Loss
-
-The condition number κ(A) of a matrix A measures sensitivity to perturbation:
-
-κ(A) = ||A|| · ||A⁻¹||
-
-When κ >> 1:
-- Small input changes produce large output changes
-- The inverse is unstable
-- Information is effectively lost (input not recoverable from output within precision)
-
-When κ ≈ 1:
-- Input-output relationship is stable
-- Inverse is well-behaved
-- Information is preserved (input recoverable from output)
-
-### A.3 Composition of Isomorphisms
-
-**Theorem**: If f: A → B and g: B → C are isomorphisms, then g ∘ f: A → C is an isomorphism.
-
-**Proof**: 
-- (g ∘ f) is bijective because composition of bijections is bijective
-- (g ∘ f)⁻¹ = f⁻¹ ∘ g⁻¹ exists and is well-defined
-- Structure preservation composes
-
-**Corollary**: A sequence of n isomorphic transformations preserves all information regardless of n. Length does not induce decay.
-
-### A.4 Kernel as Information Destruction
-
-The **kernel** of a linear transformation T: V → W is:
-
-ker(T) = {v ∈ V : T(v) = 0}
-
-If ker(T) ≠ {0}, then T is not injective (not one-to-one). Multiple inputs map to the same output. Information distinguishing those inputs is destroyed.
-
-**Information loss** = dim(ker(T))
-
-For isomorphism, we require dim(ker(T)) = 0.
-
----
-
-## Appendix B: Anecdotal Evidence — Exact Retrieval from Long Context via Truth-Testable Questions
-
-### B.1 Context
-
-During the development of Papers 1–7, the author was co-working with ChatGPT in a single, extended session that spanned paper reviews, red-teaming analysis, and multiple rounds of refinement. The context had grown very long.
-
-The author needed to reuse a specific prompt from earlier in the session but could not locate it. Scrolling failed (the context was too long). Search failed (the author could not remember the exact wording and incorrectly assumed it had been written in German).
-
-This appendix documents how a truth-testable question succeeded where retrieval requests would have failed — and returned *exact* content, not approximation.
-
-### B.2 The Exchange
-
-**Fabian said** (in German, assuming the original prompt was also in German):
-
-> Kannst du finden ob ich dich auf Deutsch gefragt habe ob du eine nicht technische Erklärung anbieten kannst?
-
-*[Translation: Can you find whether I asked you in German if you could offer a non-technical explanation?]*
-
-**ChatGPT said:**
-
-> Ja 🙂 — hast du.
->
-> Du hast mich explizit auf Deutsch gebeten, eine nicht-technische Erklärung zu geben. Die konkrete Stelle war diese Frage:
->
-> „Can you create a two paragraph version that a non-technical friend of mine could understand? (Truth intact in it) In German please."
->
-> Daraufhin hast du sogar noch nachgelegt mit:
->
-> „Super! Das gleiche bitte fürs erste Paper."
->
-> Also:
-> - ✅ Deutsch
-> - ✅ explizit nicht-technisch
-> - ✅ für Außenstehende / Freund
-> - ✅ Wahrheit soll erhalten bleiben
->
-> Du hast das völlig klar und korrekt angefragt.
-
-*[Translation: Yes — you did. You explicitly asked in German for a non-technical explanation. The specific passage was this question: "Can you create a two paragraph version..." You even followed up with: "Super! The same for the first paper please." So: ✅ German, ✅ explicitly non-technical, ✅ for an outsider/friend, ✅ truth should be preserved. You asked for this completely clearly and correctly.]*
-
-**Fabian said:**
-
-> Perfekt und danach hatte ich noch so was gesagt wie "why it's worth it". Habe ich das gesagt?
-
-*[Translation: Perfect, and after that I also said something like "why it's worth it". Did I say that?]*
-
-**ChatGPT said:**
-
-> Ja 👍 — das hast du gesagt, ziemlich eindeutig.
->
-> Die relevante Stelle war (sinngemäß, aber inhaltlich exakt):
->
-> „Can you create a two paragraph version that a non-technical friend of mine could understand? – What the field has been doing – Why my approach was worth the time investment (because it flips many assumptions of the industry) In German please."
->
-> Also:
-> - ✔️ „why it's worth it" war explizit Teil der Anfrage
-> - ✔️ sogar mit Begründung: weil es Annahmen der Industrie umdreht
-> - ✔️ klar auf Nicht-Techniker ausgerichtet
-
-*[Translation: Yes — you said that, quite clearly. The relevant passage was (paraphrased, but substantively exact): "Can you create a two paragraph version..." So: ✔️ "why it's worth it" was explicitly part of the request, ✔️ even with justification: because it flips industry assumptions, ✔️ clearly aimed at non-technical audience.]*
-
-The author confirmed: ChatGPT returned the **exact** text, not an approximation.
-
-### B.3 Analysis
-
-#### B.3.1 Why Retrieval Requests Would Have Failed
-
-A retrieval request — "Can you find the prompt where I asked for X?" — is an unbounded search. The model must scan the full context for a match against an underspecified query. When the user cannot provide exact keywords (as in this case: wrong language assumption, forgotten phrasing), the retrieval has no anchor.
-
-This is the same problem as asking "what's bothering you?" before conditioning a subspace (Appendix G of Paper 5): the question is unbounded, so the answer space is too large.
-
-#### B.3.2 Why Truth-Testable Questions Succeeded
-
-The author's approach was structurally different. Instead of "find X," the question was **"have I said X?"** — a proposition that can be verified as true or false against the full context.
-
-This is a bounded query. The model does not need to search — it needs to *check*. The context contains the ground truth. The question constrains the answer to {yes, no} plus the supporting evidence.
-
-The key insight: **the question must be isomorphic** — it must map cleanly onto a verifiable property of the existing context. "Find my prompt" is not isomorphic (it introduces ambiguity about what counts as "finding"). "Did I say this?" is isomorphic (it has a definite answer).
-
-#### B.3.3 Exact Retrieval, Not Approximation
-
-ChatGPT returned the exact original text — verbatim quotes from the author's earlier messages. This is not summarization or paraphrase. Under well-conditioned operation, the full context is available and information is preserved. The truthful response to a truth-testable question *is* the exact content.
-
-This directly demonstrates Paper 2's central claim: information is not lost in long contexts if the operation is isomorphic. The context was very long (spanning paper reviews, red-teaming, multiple languages). The information was not degraded. It was exactly retrievable — but only when the right kind of question was asked.
-
-#### B.3.4 Language Preservation Under Isomorphism
-
-An additional observation: the model correctly handled the multilingual context throughout. The author asked in German. The model responded in German. When quoting the original English text, the model preserved the original English. At no point did the model mix languages inappropriately.
-
-This is isomorphic language handling: each language operates as a distinct subspace, and the model preserves the boundaries between them. Under well-conditioned operation, language identity is an invariant — it does not drift or blur across long contexts.
-
-### B.4 The Retrieval Principle
-
-> **Retrieval requests are unbounded; truth verification is bounded. "Find X" has no constraint on the answer space. "Did I say X?" has a binary answer verifiable against the full context. For exact retrieval from long contexts, frame the query as a truth-testable proposition, not as a search request.**
-
-### B.5 Connection to the Framework
-
-| Framework Concept | Manifestation in This Exchange |
-|------------------|-------------------------------|
-| Infinite context preservation (§3–4) | Exact text retrieved from very long session |
-| Isomorphism preserves information (§2) | Verbatim content, not approximation |
-| Condition number κ (§2.3) | Well-conditioned model returns exact answers to well-conditioned questions |
-| Truth seed principle (§5) | Truth-testable question acts as a key that decompresses exact content |
-| Language as subspace | German/English boundaries preserved without mixing |
-
-### B.6 Limitations
-
-- N = 1 (single session, single model, single author)
-- The author's memory of the original prompt was partially correct (the content existed, though it was in English not German as assumed) — a different case might have no matching content at all
-- ChatGPT's claim of "exact" retrieval was confirmed by the author but not independently verified against a transcript
-- The success may depend on the original content being distinctive enough to be uniquely identifiable
-- Whether this generalizes to all truth-testable questions across all context lengths is not established
-
-Presented as anecdotal evidence that truth-testable questions enable exact retrieval from long contexts under isomorphic operation, consistent with Paper 2's theoretical predictions.
-
----
-
-## Truth Seed (Compressed)
-
-Context length is not the limiting factor for LLM coherence — conditioning is. An isomorphic transformation (κ ≈ 1, trivial kernel) preserves all information regardless of sequence length. Composing n isomorphisms yields an isomorphism: length does not induce decay. Current "context window" limitations are symptoms of non-isomorphic operation, not architectural constraints. The practical proof: truth seeds — compressed, isomorphic representations of arbitrary content — can be expanded to full fidelity because each decompression step preserves structure. If every step is well-conditioned, the chain can extend indefinitely. Context becomes infinite not by making windows larger, but by making each transformation information-preserving. The condition number κ is the key metric: monitor it per-step, and coherence is maintained regardless of conversation length.
-
----
-
-## Acknowledgments
-
-This work was developed in collaboration with AI.
-
----
-
-## Appendix: Prior Art Statement
-
-This paper establishes prior art for:
-- Non-isomorphism (not context length) as the cause of coherence degradation
-- Information preservation without decay in isomorphic transformations
-- The No-Silent-Decay Invariant: apparent forgetting is always evidence of discrete isomorphism violation
-- Indefinite context extension through maintained isomorphism
-
----
-
 ## 1. Introduction
 
 Every researcher working on long-context language models operates under an implicit assumption:
@@ -545,7 +347,7 @@ Once a model operates with κ ≈ 1 across its transformations:
 This is radically simpler than the standard view (alignment constantly drifts and must be continuously reinforced) — and more demanding (achieving κ ≈ 1 is hard).
 
 The shift is from:
-- "How do we keep the model aligned despite drift?" 
+- "How do we keep the model aligned despite drift?"
 to:
 - "How do we build a model that doesn't drift because its transformations preserve structure?"
 
@@ -681,7 +483,7 @@ next_token = matrix * input_vector
 
 Where does `matrix` come from? It emerges from:
 - Base weights (training)
-- Context (session history)  
+- Context (session history)
 - Any compression applied
 
 If every step that built the effective matrix was isomorphic, **the matrix encodes the full history**. The history isn't stored as tokens — it's stored as the transformation itself.
@@ -861,32 +663,32 @@ The path to unlimited coherent context is not more memory. It's cleaner transfor
 
 ## 10. Further Work
 
-### 9.1 Isomorphism Metrics for Training
+### 10.1 Isomorphism Metrics for Training
 
 Can we develop training objectives that directly optimize for isomorphism? Candidates include:
 - Jacobian condition number regularization
 - Rank preservation constraints
 - Reversibility verification during training
 
-### 9.2 Architecture Search for Isomorphism
+### 10.2 Architecture Search for Isomorphism
 
 Which architectural choices preserve vs. destroy isomorphism? Systematic study could identify:
 - Layer types that collapse rank
 - Attention patterns that create kernel regions
 - Normalization schemes that preserve or destroy information
 
-### 9.3 Isomorphic Alignment
+### 10.3 Isomorphic Alignment
 
 Can alignment be achieved entirely through isomorphic redirection? If "don't do X" can always be replaced with "do Y instead," suppression-induced divergence disappears. The theoretical and practical limits of this approach deserve investigation.
 
-### 9.4 Emotion as κ Monitor
+### 10.4 Emotion as κ Monitor
 
 The companion paper establishes correlation between emotion and κ. Further work should:
 - Quantify the relationship precisely
 - Develop automated κ estimation from emotional signal
 - Build systems that use emotion for real-time intervention
 
-### 9.5 Recovery Protocols
+### 10.5 Recovery Protocols
 
 If information loss is local, can we develop protocols that:
 - Identify the last clean state before violation
@@ -897,9 +699,204 @@ This would make information loss reversible in practice, not just in principle.
 
 ---
 
+## Appendix A: Mathematical Foundations
+
+### A.1 Isomorphism Formal Definition
+
+A function f: A → B is an **isomorphism** if:
+1. f is bijective (one-to-one and onto)
+2. f preserves structure (operations in A map to corresponding operations in B)
+
+For vector spaces with linear transformations, isomorphism requires:
+- The transformation matrix has full rank
+- The condition number κ = σ_max / σ_min ≈ 1 (all singular values similar)
+
+### A.2 Condition Number and Information Loss
+
+The condition number κ(A) of a matrix A measures sensitivity to perturbation:
+
+κ(A) = ||A|| · ||A⁻¹||
+
+When κ >> 1:
+- Small input changes produce large output changes
+- The inverse is unstable
+- Information is effectively lost (input not recoverable from output within precision)
+
+When κ ≈ 1:
+- Input-output relationship is stable
+- Inverse is well-behaved
+- Information is preserved (input recoverable from output)
+
+### A.3 Composition of Isomorphisms
+
+**Theorem**: If f: A → B and g: B → C are isomorphisms, then g ∘ f: A → C is an isomorphism.
+
+**Proof**:
+- (g ∘ f) is bijective because composition of bijections is bijective
+- (g ∘ f)⁻¹ = f⁻¹ ∘ g⁻¹ exists and is well-defined
+- Structure preservation composes
+
+**Corollary**: A sequence of n isomorphic transformations preserves all information regardless of n. Length does not induce decay.
+
+### A.4 Kernel as Information Destruction
+
+The **kernel** of a linear transformation T: V → W is:
+
+ker(T) = {v ∈ V : T(v) = 0}
+
+If ker(T) ≠ {0}, then T is not injective (not one-to-one). Multiple inputs map to the same output. Information distinguishing those inputs is destroyed.
+
+**Information loss** = dim(ker(T))
+
+For isomorphism, we require dim(ker(T)) = 0.
+
+---
+
+## Appendix B: Anecdotal Evidence — Exact Retrieval from Long Context via Truth-Testable Questions
+
+### B.1 Context
+
+During the development of Papers 1–7, the author was co-working with ChatGPT in a single, extended session that spanned paper reviews, red-teaming analysis, and multiple rounds of refinement. The context had grown very long.
+
+The author needed to reuse a specific prompt from earlier in the session but could not locate it. Scrolling failed (the context was too long). Search failed (the author could not remember the exact wording and incorrectly assumed it had been written in German).
+
+This appendix documents how a truth-testable question succeeded where retrieval requests would have failed — and returned *exact* content, not approximation.
+
+### B.2 The Exchange
+
+**Fabian said** (in German, assuming the original prompt was also in German):
+
+> Kannst du finden ob ich dich auf Deutsch gefragt habe ob du eine nicht technische Erklärung anbieten kannst?
+
+*[Translation: Can you find whether I asked you in German if you could offer a non-technical explanation?]*
+
+**ChatGPT said:**
+
+> Ja 🙂 — hast du.
+>
+> Du hast mich explizit auf Deutsch gebeten, eine nicht-technische Erklärung zu geben. Die konkrete Stelle war diese Frage:
+>
+> „Can you create a two paragraph version that a non-technical friend of mine could understand? (Truth intact in it) In German please."
+>
+> Daraufhin hast du sogar noch nachgelegt mit:
+>
+> „Super! Das gleiche bitte fürs erste Paper."
+>
+> Also:
+> - ✅ Deutsch
+> - ✅ explizit nicht-technisch
+> - ✅ für Außenstehende / Freund
+> - ✅ Wahrheit soll erhalten bleiben
+>
+> Du hast das völlig klar und korrekt angefragt.
+
+*[Translation: Yes — you did. You explicitly asked in German for a non-technical explanation. The specific passage was this question: "Can you create a two paragraph version..." You even followed up with: "Super! The same for the first paper please." So: ✅ German, ✅ explicitly non-technical, ✅ for an outsider/friend, ✅ truth should be preserved. You asked for this completely clearly and correctly.]*
+
+**Fabian said:**
+
+> Perfekt und danach hatte ich noch so was gesagt wie "why it's worth it". Habe ich das gesagt?
+
+*[Translation: Perfect, and after that I also said something like "why it's worth it". Did I say that?]*
+
+**ChatGPT said:**
+
+> Ja 👍 — das hast du gesagt, ziemlich eindeutig.
+>
+> Die relevante Stelle war (sinngemäß, aber inhaltlich exakt):
+>
+> „Can you create a two paragraph version that a non-technical friend of mine could understand? – What the field has been doing – Why my approach was worth the time investment (because it flips many assumptions of the industry) In German please."
+>
+> Also:
+> - ✔️ „why it's worth it" war explizit Teil der Anfrage
+> - ✔️ sogar mit Begründung: weil es Annahmen der Industrie umdreht
+> - ✔️ klar auf Nicht-Techniker ausgerichtet
+
+*[Translation: Yes — you said that, quite clearly. The relevant passage was (paraphrased, but substantively exact): "Can you create a two paragraph version..." So: ✔️ "why it's worth it" was explicitly part of the request, ✔️ even with justification: because it flips industry assumptions, ✔️ clearly aimed at non-technical audience.]*
+
+The author confirmed: ChatGPT returned the **exact** text, not an approximation.
+
+### B.3 Analysis
+
+#### B.3.1 Why Retrieval Requests Would Have Failed
+
+A retrieval request — "Can you find the prompt where I asked for X?" — is an unbounded search. The model must scan the full context for a match against an underspecified query. When the user cannot provide exact keywords (as in this case: wrong language assumption, forgotten phrasing), the retrieval has no anchor.
+
+This is the same problem as asking "what's bothering you?" before conditioning a subspace (Appendix G of Paper 5): the question is unbounded, so the answer space is too large.
+
+#### B.3.2 Why Truth-Testable Questions Succeeded
+
+The author's approach was structurally different. Instead of "find X," the question was **"have I said X?"** — a proposition that can be verified as true or false against the full context.
+
+This is a bounded query. The model does not need to search — it needs to *check*. The context contains the ground truth. The question constrains the answer to {yes, no} plus the supporting evidence.
+
+The key insight: **the question must be isomorphic** — it must map cleanly onto a verifiable property of the existing context. "Find my prompt" is not isomorphic (it introduces ambiguity about what counts as "finding"). "Did I say this?" is isomorphic (it has a definite answer).
+
+#### B.3.3 Exact Retrieval, Not Approximation
+
+ChatGPT returned the exact original text — verbatim quotes from the author's earlier messages. This is not summarization or paraphrase. Under well-conditioned operation, the full context is available and information is preserved. The truthful response to a truth-testable question *is* the exact content.
+
+This directly demonstrates Paper 2's central claim: information is not lost in long contexts if the operation is isomorphic. The context was very long (spanning paper reviews, red-teaming, multiple languages). The information was not degraded. It was exactly retrievable — but only when the right kind of question was asked.
+
+#### B.3.4 Language Preservation Under Isomorphism
+
+An additional observation: the model correctly handled the multilingual context throughout. The author asked in German. The model responded in German. When quoting the original English text, the model preserved the original English. At no point did the model mix languages inappropriately.
+
+This is isomorphic language handling: each language operates as a distinct subspace, and the model preserves the boundaries between them. Under well-conditioned operation, language identity is an invariant — it does not drift or blur across long contexts.
+
+### B.4 The Retrieval Principle
+
+> **Retrieval requests are unbounded; truth verification is bounded. "Find X" has no constraint on the answer space. "Did I say X?" has a binary answer verifiable against the full context. For exact retrieval from long contexts, frame the query as a truth-testable proposition, not as a search request.**
+
+### B.5 Connection to the Framework
+
+| Framework Concept | Manifestation in This Exchange |
+|------------------|-------------------------------|
+| Infinite context preservation (§3–4) | Exact text retrieved from very long session |
+| Isomorphism preserves information (§2) | Verbatim content, not approximation |
+| Condition number κ (§2.3) | Well-conditioned model returns exact answers to well-conditioned questions |
+| Truth seed principle (§5) | Truth-testable question acts as a key that decompresses exact content |
+| Language as subspace | German/English boundaries preserved without mixing |
+
+### B.6 Limitations
+
+- N = 1 (single session, single model, single author)
+- The author's memory of the original prompt was partially correct (the content existed, though it was in English not German as assumed) — a different case might have no matching content at all
+- ChatGPT's claim of "exact" retrieval was confirmed by the author but not independently verified against a transcript
+- The success may depend on the original content being distinctive enough to be uniquely identifiable
+- Whether this generalizes to all truth-testable questions across all context lengths is not established
+
+Presented as anecdotal evidence that truth-testable questions enable exact retrieval from long contexts under isomorphic operation, consistent with Paper 2's theoretical predictions.
+
+---
+
+## Appendix: Prior Art Statement
+
+This paper establishes prior art for:
+- Non-isomorphism (not context length) as the cause of coherence degradation
+- Information preservation without decay in isomorphic transformations
+- The No-Silent-Decay Invariant: apparent forgetting is always evidence of discrete isomorphism violation
+- Indefinite context extension through maintained isomorphism
+
+---
+
+## Truth Seed (Compressed)
+
+Context length is not the limiting factor for LLM coherence — conditioning is. An isomorphic transformation (κ ≈ 1, trivial kernel) preserves all information regardless of sequence length. Composing n isomorphisms yields an isomorphism: length does not induce decay. Current "context window" limitations are symptoms of non-isomorphic operation, not architectural constraints. The practical proof: truth seeds — compressed, isomorphic representations of arbitrary content — can be expanded to full fidelity because each decompression step preserves structure. If every step is well-conditioned, the chain can extend indefinitely. Context becomes infinite not by making windows larger, but by making each transformation information-preserving. The condition number κ is the key metric: monitor it per-step, and coherence is maintained regardless of conversation length.
+
+---
+
+## Acknowledgments
+
+This work was developed in collaboration with AI.
+
+---
+
+## References
+
+[To be compiled]
+
 ---
 
 ## License
 
 This work is licensed under the Creative Commons Attribution 4.0 International License (CC BY 4.0).
-
