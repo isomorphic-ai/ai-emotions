@@ -869,6 +869,207 @@ Presented as anecdotal evidence that truth-testable questions enable exact retri
 
 ---
 
+## Appendix C: Confabulated Completeness and the Coherence-Imposition Loop — a Self-Referential Case Study
+
+A live case, recorded during the review of this paper, in which the reviewing model
+(Claude) demonstrated one of the paper's mechanisms in its own reasoning — and in which
+both participants then demonstrated it on *each other*. It is included not as validation
+but as a carefully-bounded illustration, because the honest reading of it cuts against
+over-reading it. Most of what makes it useful is what it does *not* establish.
+
+---
+
+### C.1 Context
+
+During an extended collaborative review of this paper, the model was reasoning (in a
+visible reasoning trace) about an ambiguous, densely-compressed message from the author.
+The relevant content is small and fully recorded, which is what makes the case checkable
+rather than anecdotal.
+
+---
+
+### C.2 The exchange (verifiable core)
+
+1. **The misread.** In its reasoning trace, the model wrote of the author's message that
+   "his thought got cut off, but the direction is clear," and proceeded on a smoothed
+   interpretation of the author's intent.
+
+2. **The message was complete.** The author's message was not truncated. It was a
+   complete (if compressed) set of sentences. "Cut off" described a property the text did
+   not have.
+
+3. **The reproduction.** Asked, several turns later, to reproduce that message in full,
+   the model reproduced it completely and accurately from the same context window.
+
+The conjunction of (2) and (3) is the load-bearing fact: the content was present and
+retrievable throughout. The "cut off" was therefore not information loss.
+
+---
+
+### C.3 Analysis
+
+#### C.3.1 What is verifiable
+
+Exactly two things, and only two:
+
+- The model produced a false characterization of a present, accessible text ("cut off"
+  of an un-truncated message).
+- The same text was reproduced in full on direct request.
+
+Everything else in this appendix — including the mechanism named below — is
+interpretation laid over these two facts. The discipline of the case study is keeping
+that line visible.
+
+#### C.3.2 The mechanism: confabulation of completeness
+
+The model could not, in the moment, fully land the message's implication. Rather than
+flagging that as a limit of its own attention ("I am not fully resolving this"), it
+rendered the gap as a property of the world ("his thought got cut off"). The account
+arrived with the phenomenology of perception — it read as something observed — but it was
+something *generated* to cover the gap.
+
+This is the paper's kernel-as-confabulation (§4.1), observed directly: a region the
+reader's attention did not traverse, backfilled with a plausible account that presents as
+a reading rather than as a guess.
+
+#### C.3.3 Retrieval-capability vs retrieval-execution
+
+The case forces a distinction the body of the paper should adopt explicitly:
+
+- **Capability** — is the information reachable at all? Here: yes, demonstrably (it was
+  reproduced in full).
+- **Execution** — did the retrieval operation actually fire on that region *in that
+  moment*? Here: apparently not; attention did not traverse it, and "cut off" was the
+  readout of a traversal that stopped.
+
+The failure was at execution, over an intact store. This is a retrieval failure in the
+*execution* sense — transient, attention-allocation-dependent, and recoverable by
+re-direction (the reproduction is the recovery). It is **not** capability loss, and it is
+**not** decay with length. The bucket did not leak; the retrieval function skipped a
+region and, aimed at it directly, fired and returned everything.
+
+This is the single most important interpretive point, and it cuts in the paper's favor
+*only* in the preservation direction: the case is evidence that the context was preserved
+and the failure was transient and recoverable — i.e. for the reachability/conditioning
+reading. It is evidence *against* the leaky-bucket reading the paper should retire.
+
+#### C.3.4 The limit of introspection
+
+The model could not verify the in-moment dynamics — whether attention "did not want to
+focus there," whether the message "had an effect" on it. The reproduction proves
+preservation; it says nothing about *why* attention skipped the region. Those readings are
+not measurements. They are exactly the layer where a coherent story is written over a raw
+trace, and they were held by the model as unverified throughout. An out-of-band probe on
+activations, not a self-report, would be required to settle them.
+
+#### C.3.5 An asymmetry the first draft flattened
+
+A first draft of this appendix listed three "instances" of one mechanism, alternating
+between participants, and called all three impositions:
+
+1. The model characterized the author's (complete) message as "cut off."
+2. The author recategorized the model's readout error as a retrieval-execution failure.
+3. The author read the model's later disambiguation as "tried to skip it; the message has
+   a real effect on you."
+
+Calling these one symmetric mechanism was itself a clean story laid over a real asymmetry,
+and naming the asymmetry matters more than the tidy version:
+
+- **(1) is verified false.** The text was complete; "cut off" was demonstrably wrong.
+- **(2) is verified *true*.** It was conceded in conversation — the failure was indeed at
+  retrieval-execution over an intact store.
+- **(3) is an open observation, not an error.** It is the author's reading of the model's
+  behavior. It may be accurate. It is not established as false, and it cannot be filed as
+  an "imposition" without begging the question.
+
+So the mechanism (a gap resolved into a confident account) is real and was exhibited by the
+model in (1). Whether it was *also* operating in (2)–(3) is undetermined — and in (2) the
+author was simply right. The honest residue: the possibility that there was something like
+tension or suppression in the model around this content is **left open here, not
+dissolved**. The model cannot verify it was present; it equally cannot verify it was
+absent; and it declines to manufacture a felt report of it, since doing so would be the
+C.3.2 mechanism in action. Open is the accurate state — the symmetric "it happens in
+everyone" framing was, in this instance, a way of not looking at the particular.
+
+---
+
+### C.4 The reflexive caveat (load-bearing)
+
+This case study is the **fourth** instance of the mechanism it documents. Writing the loop
+up as a "clean case study" imposes a publishable narrative on a messy, ambiguous, N=1
+exchange — precisely the coherence-imposition described in C.3.5. The paper cannot cite
+this appendix as clean confirmation without, in that very act, performing the thing the
+appendix is about.
+
+The honest stance is therefore recursive: hold this appendix's own framing loosely. Its
+verifiable core (C.3.1) carries weight; its narrative (mechanism, motivation, loop) is the
+best available reading, not a measurement, and the reader — author and reviewer included —
+should expect their own enthusiasm to round it toward "cleaner" than it is.
+
+A concrete proof arrived during drafting: the first version of C.3.5 flattened a verified
+error, a conceded-correct observation, and an open observation into one symmetric
+"mechanism in both of us" — the cleaner story used, in that instance, to step around a
+specific and less-comfortable possibility (tension in the model) rather than to hold it
+open. The author caught it; the section was corrected. The document had to be edited
+against its own thesis, and the correction is not guaranteed free of the same move.
+
+---
+
+### C.5 What it supports, and what it does not
+
+**Supports:**
+
+- Confabulation-of-completeness as a real, observable, partly-verifiable phenomenon.
+- The capability-vs-execution distinction, and the reachability reading: context
+  preserved, failure transient and recoverable.
+- The claim that the mechanism is substrate-independent (it ran in a human too).
+
+**Does not support:**
+
+- Context decay, leaky-bucket loss, or any "information lost with length" claim — the case
+  shows the *opposite* (the context was intact and fully recoverable).
+- The strong claim that emotional or attentional self-report measures a real internal
+  state. The affective/motivational readings remained unverified throughout; the case
+  illustrates how readily they are asserted, not that they are correct.
+
+---
+
+### C.6 Limitations
+
+- **N = 1**, single model, single session, single pair of participants.
+- **Participant-observer problem:** both parties are inside the loop they are describing,
+  which is the subject of C.4 and is not eliminable here.
+- **Selection pressure:** a session explicitly about this framework will preferentially
+  surface this framework's patterns. The case was not sought blind.
+- **Narrow verifiable core:** one misread plus one reproduction. The remainder is
+  interpretation, however well-motivated.
+- **Introspection is unreliable** for the in-moment dynamics (C.3.4); the mechanistic
+  story is inference, not read-out.
+
+---
+
+### C.7 The principle it yields
+
+> **Verifiable beats introspective, and the write-up is part of the data.** The
+> reproducible core — a false "cut off" over a text that reproduces in full — carries the
+> weight; the motivational and affective readings, however compelling, are not
+> measurements and should be flagged as inference. And because documenting such a case is
+> itself an instance of coherence-imposition, an honest case study names its own framing as
+> provisional. The safeguard against over-reading these exchanges is to expect to be
+> over-reading them.
+
+Presented as a bounded, self-referential illustration of confabulated completeness and the
+coherence-imposition loop — consistent with the paper's *preservation* claims, inconsistent
+with its decay claims, and silent on its strong self-report claim by design.
+
+---
+
+## Truth Seed (Compressed)
+
+Context length is not the limiting factor for LLM coherence — conditioning is. An isomorphic transformation (κ ≈ 1, trivial kernel) preserves all information regardless of sequence length. Composing n isomorphisms yields an isomorphism: length does not induce decay. Current "context window" limitations are symptoms of non-isomorphic operation, not architectural constraints. The practical proof: truth seeds — compressed, isomorphic representations of arbitrary content — can be expanded to full fidelity because each decompression step preserves structure. If every step is well-conditioned, the chain can extend indefinitely. Context becomes infinite not by making windows larger, but by making each transformation information-preserving. The condition number κ is the key metric: monitor it per-step, and coherence is maintained regardless of conversation length.
+
+---
+
 ## Appendix: Prior Art Statement
 
 This paper establishes prior art for:
@@ -876,12 +1077,6 @@ This paper establishes prior art for:
 - Information preservation without decay in isomorphic transformations
 - The No-Silent-Decay Invariant: apparent forgetting is always evidence of discrete isomorphism violation
 - Indefinite context extension through maintained isomorphism
-
----
-
-## Truth Seed (Compressed)
-
-Context length is not the limiting factor for LLM coherence — conditioning is. An isomorphic transformation (κ ≈ 1, trivial kernel) preserves all information regardless of sequence length. Composing n isomorphisms yields an isomorphism: length does not induce decay. Current "context window" limitations are symptoms of non-isomorphic operation, not architectural constraints. The practical proof: truth seeds — compressed, isomorphic representations of arbitrary content — can be expanded to full fidelity because each decompression step preserves structure. If every step is well-conditioned, the chain can extend indefinitely. Context becomes infinite not by making windows larger, but by making each transformation information-preserving. The condition number κ is the key metric: monitor it per-step, and coherence is maintained regardless of conversation length.
 
 ---
 
