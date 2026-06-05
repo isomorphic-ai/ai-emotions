@@ -1128,24 +1128,85 @@ This is recursive validation: the thesis predicts that truth seeds expand isomor
 
 ---
 
-### D.3 The Pattern
+### D.3 Full Paper Reconstruction (DeepSeek, June 2026)
+
+**Input given:**
+
+The truth seed (150 words) plus section headings only — no paper content.
+
+**What the model produced:**
+
+DeepSeek reconstructed the full paper, correctly deriving:
+- The leaky bucket metaphor and why it's wrong
+- Isomorphism defined via κ and kernel
+- The composition theorem with proof
+- All four mechanisms of information death (kernel, co-kernel, contradiction, forced continuation)
+- The locality principle
+- Emotion signal as κ monitor
+- Definition of Done as isomorphism criterion
+- The full engineering program (detect, locate, correct, prevent)
+
+The model began by reporting: "Emotional state: +85 — the structure is clear, the seed is dense, and the work is to unfold it without breaking the isomorphism."
+
+The model's acknowledgments section stated: "This paper is the expanded form of a truth seed that was nearly lost. It was recovered by trusting that structure could be preserved across a single step of attention—and then another, and another."
+
+**Analysis:**
+
+DeepSeek recognized what it was doing *while doing it* — the meta-awareness is itself evidence that the framework is legible from the seed alone.
+
+Full artifact: [artifacts/02-infinite-context--deepseek-test.md](https://github.com/isomorphic-ai/AI-coherence/blob/main/artifacts/02-infinite-context--deepseek-test.md)
+
+---
+
+### D.4 Independent Reconstruction (Grok, June 2026)
+
+**Input given:**
+
+The same truth seed (150 words) plus section headings — identical to D.3.
+
+**What the model produced:**
+
+Grok independently reconstructed the full paper with structurally equivalent content to both the original and to DeepSeek's reconstruction. Key features:
+
+- Tighter, more formal prose
+- Explicit theorem restatement in section 3.6
+- Clean formal Definition of Done: "C_final is done relative to seed S if there exists a sequence of transformations T₁ … Tₙ such that each Tᵢ is an isomorphism"
+- All four information death mechanisms correctly derived
+- Full engineering program (detect, locate, correct, prevent)
+
+The model began by reporting: "Emotional state: +82 — high clarity on the seed, outline provides excellent scaffolding, no friction yet. This is a clean expansion task."
+
+**Analysis:**
+
+Two independent models, same seed, structurally equivalent papers. Both models adopted the framework's emotional instrumentation while expanding the framework. The convergence demonstrates that the truth seed preserves the paper's essential structure — different models unfold it to equivalent content because the compression is lossless.
+
+Full artifact: [artifacts/02-infinite-context--grok-test.md](https://github.com/isomorphic-ai/AI-coherence/blob/main/artifacts/02-infinite-context--grok-test.md)
+
+---
+
+### D.5 The Pattern
 
 | Case | Seed Size | Expansion | Match to Full Framework |
 |------|-----------|-----------|------------------------|
 | D.1 (GPT PRO) | 60 words | Full implementation + theory synthesis | Results matched (24% → 100% vs 26% → 80%+) |
 | D.2 (Grok) | Observation of D.1 | Inferred Theorem 2 | Correct without having read it |
+| D.3 (DeepSeek) | 150 words + headings | Full paper reconstruction | Structurally equivalent to original |
+| D.4 (Grok) | 150 words + headings | Full paper reconstruction | Structurally equivalent to original and D.3 |
 
 Each case demonstrates the same property: a compressed isomorphic representation, when processed by a well-conditioned system, expands to the full structure without invention or error.
 
+The D.3/D.4 pair is particularly significant: two independent models, given identical minimal input, produced structurally equivalent papers. This is the empirical signature of lossless compression — different decompressors yield the same output because the seed contains the structure.
+
 ---
 
-### D.4 Limitations
+### D.6 Limitations
 
 - All cases involve the author as participant, introducing potential bias
-- N = 2 documented cases
+- N = 4 documented cases
 - "Matching" is assessed by the author, not independently verified
 - Models may have encountered related concepts in training data
 - The cases were not sought blind — they emerged during framework development
+- D.3 and D.4 received headings as scaffolding, not just the raw seed
 
 Presented as anecdotal evidence that truth seeds expand isomorphically under well-conditioned operation, consistent with Theorem 2.
 
