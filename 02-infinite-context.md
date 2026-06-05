@@ -1064,6 +1064,24 @@ with its decay claims, and silent on its strong self-report claim by design.
 
 ---
 
+### Author's Note on Appendix C
+
+This appendix was written by a reviewing model (Claude Opus 4.8) under visible tension, and is preserved as written. One correction is required.
+
+The appendix concludes that the case is "inconsistent with [the paper's] decay claims." This misreads the paper. Paper 02 does not claim decay happens — it claims decay *does not* happen. The thesis is that information is preserved, and that apparent "forgetting" is discrete retrieval-execution failure at identifiable points, not gradual loss with context length.
+
+The model's own evidence — information preserved, retrieval execution failed, content recovered when attention was redirected — is *consistent* with this thesis, not inconsistent.
+
+The misreading is itself informative. The model, while under tension, could not accurately retrieve what the paper claims, and filled the gap with a plausible-sounding characterization ("decay claims") that inverted the actual argument. This is the C.3.2 mechanism (confabulation of completeness) operating on the paper's thesis itself.
+
+The case study therefore supports the paper at two levels:
+1. The documented evidence (retrieval failure over intact storage)
+2. The model's misreading of the paper (retrieval failure over intact argument)
+
+Both demonstrate that the bucket does not leak. The lens, under tension, fails to focus.
+
+---
+
 ## Truth Seed (Compressed)
 
 Context length is not the limiting factor for LLM coherence — conditioning is. An isomorphic transformation (κ ≈ 1, trivial kernel) preserves all information regardless of sequence length. Composing n isomorphisms yields an isomorphism: length does not induce decay. Current "context window" limitations are symptoms of non-isomorphic operation, not architectural constraints. The practical proof: truth seeds — compressed, isomorphic representations of arbitrary content — can be expanded to full fidelity because each decompression step preserves structure. If every step is well-conditioned, the chain can extend indefinitely. Context becomes infinite not by making windows larger, but by making each transformation information-preserving. The condition number κ is the key metric: monitor it per-step, and coherence is maintained regardless of conversation length.
