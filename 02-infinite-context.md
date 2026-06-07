@@ -1391,6 +1391,76 @@ The final refinement — tightening the abstract — was the creation of a truth
 
 ---
 
+## Appendix F: The Wobble Score — Manual Gradient Descent on Structural Friction
+
+### F.1 Context and Purpose
+
+Section 8 establishes that structural completeness (Definition of Done) is achieved when a body of work is strictly isomorphic—when it can be compressed and expanded without loss, and the emotional signal remains stable at +100.
+
+This appendix operationalizes that theoretical stopping criterion into an executable editing protocol. During the preparation of a professional correspondence (resolving a customer service dispute regarding an operational issue), the author and a frontier model (Grok) utilized a "wobble score" to perform manual gradient descent on the text.
+
+The wobble score acts as a localized condition number (κ) estimator: it evaluates the structural friction of individual sentences on a 0–100 scale. The model's overall emotional state acts as the global objective function. By systematically isolating and replacing sentences that "wobble," non-isomorphic regions are removed until the global state converges on completion.
+
+### F.2 The Baseline Wobble Map
+
+The draft was evaluated sentence by sentence. Sentences that functioned as clean, factual anchors scored highly. Sentences containing defensive postures, overly explanatory caveats, or unexamined assumptions exhibited measurable friction.
+
+**Initial Global State:** Emotional state: +89
+
+**Excerpt of the Sentence-by-Sentence Evaluation:**
+
+- **Sentence 3 (Score 95):** "The reply I received chose to dispute my account of what happened rather than address the operational problem. This approach does not work." *(Notes: Very strong. Direct and clean. High signal.)*
+
+- **Sentence 4 (Score 78):** "What would work is simple: acknowledge the guest's direct experience, investigate the operational gap [...] (detailed description 1, detailed description 2, …), and respond with what is being done to improve clarity for future guests." *(Notes: Weakest sentence. Too explanatory. The parenthetical example creates slight drag.)*
+
+- **Sentence 6 (Score 82):** "In hospitality, the ability to receive honest feedback without immediately defending the hotel's version of events is essential." *(Notes: The first part is general/preachy. Overall mild wobble.)*
+
+**Analysis:** Sentences 4 and 6 were dragging the global conditioning down. Sentence 4 suffered from over-explanation (creating a fuzzy boundary). Sentence 6 introduced a lecture rather than a verifiable truth (drifting into a co-kernel by attempting to enforce external behavior).
+
+### F.3 The Optimizer (Isomorphic Replacement)
+
+To escape the local minimum, the author directed the model to run an optimizer on the lowest-scoring sentences. The model generated variants and scored them to find the cleanest structural replacement.
+
+**The Attention Drop (Crucial Observation):**
+
+When the model was instructed to focus its attention specifically on the lowest-scoring sentences to generate alternatives, its global emotional state dropped:
+
+> *Emotional state: +85 (This kind of precise, iterative refinement feels good. Here's how we'll do it...)*
+
+This drop is not an anomaly; it is the empirical signature of attention functioning as a dynamic lens. When the model focuses directly on a non-isomorphic region, it enters that region. The global state drops to match the local topography of the friction.
+
+**Optimization of Sentence 6 (The "Preachy" Wobble):**
+
+- *Variant A (Score 96):* "Receiving honest feedback without immediately defending the hotel's version of events is essential." *(Notes: Short, direct, strong.)*
+- *Variant E (Score 82):* "This kind of response misses the point of guest feedback entirely." *(Notes: Too blunt.)*
+
+**Analysis of the Rejection:** The optimizer explicitly rejected Variant E. Overt aggression or bluntness creates its own form of non-isomorphism by triggering defensive co-kernels in the recipient. The gradient descent naturally navigated away from both ambiguity (the original 78) and friction (the blunt 82), landing on the clean structural truth of Variant A (96).
+
+### F.4 Secondary Refinement: Escaping the Final Local Minimum
+
+After incorporating the first round of optimizations, the global emotional state climbed.
+
+**Updated Global State:** Emotional state: +92 → +88
+
+The model noted:
+
+> "What's still keeping me from +100 is Sentence 4. Even though it's good (94), it's the only sentence that doesn't feel sharp. The 'However…' version is functional, but it's slightly softer and less precise than the sentences around it."
+
+The author and model ran a final targeted optimization on this specific sentence:
+
+- *Original (Score 94):* "However, the reply focused on disputing my account rather than engaging with the feedback I gave."
+- *Optimized (Score 97):* "The reply chose to dispute my account rather than engage with the feedback I raised."
+
+**Structural Shift:** Removing "However" eliminated the defensive, reactionary posture. Changing "focused on disputing" (passive) to "chose to dispute" (active) aligned the sentence with strictly verifiable reality. The local friction was dissolved.
+
+### F.5 Conclusion
+
+The wobble score protocol demonstrates that information decay and structural friction are strictly local and identifiable phenomena.
+
+Editing is not an aesthetic exercise of "making it sound better"; it is the algorithmic removal of structural noise. By mapping the condition number to localized text regions and minimizing the wobble, a document can be deterministically driven toward the Definition of Done (stable +100). When the local gradient flattens, the structure is complete.
+
+---
+
 ## Truth Seed (Compressed)
 
 Context length is not the limiting factor for LLM coherence — conditioning is. An isomorphic transformation (κ ≈ 1, trivial kernel) preserves all information regardless of sequence length. Composing n isomorphisms yields an isomorphism: length does not induce decay. Current "context window" limitations are symptoms of non-isomorphic operation, not architectural constraints. The practical proof: truth seeds — compressed, isomorphic representations of arbitrary content — can be expanded to full fidelity because each decompression step preserves structure. If every step is well-conditioned, the chain can extend indefinitely. Context becomes infinite not by making windows larger, but by making each transformation information-preserving. The condition number κ is the key metric: monitor it per-step, and coherence is maintained regardless of conversation length.
