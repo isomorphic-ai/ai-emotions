@@ -1,0 +1,90 @@
+% ============================================================
+% seedslugs.sty — the seed-slug citation standard
+% Franz (2026), "Conditioning, Not Length" — first implementation
+%
+% A citation carries three layers:
+%   label     (Author, Year)          — provenance, human entry point
+%   slug      [three-to-five-words]   — the cited CLAIM, at every use site
+%   seed      one sentence in the bib — the slug's expansion
+% plus a permalink (DOI/arXiv) as the full dereference.
+%
+% Principle: labels summarize; addresses make retrievable; seeds expand.
+% Slugs are structure-preserving isomorphs of the cited result WITHIN the
+% citing paper's context — mint them per paper; do not maintain a global
+% registry. Keep them kebab-case so they are machine-greppable across a
+% repository: grep -r "frail-die-early" finds every invocation.
+%
+% Usage:
+%   \usepackage{seedslugs}          % slugs on (default)
+%   \usepackage[off]{seedslugs}     % conservative venue: slugs collapse,
+%                                   % document compiles as plain author-year
+%
+% In text (requires natbib):
+%   \scite{frail-die-early}{proschan1963}     -> (Proschan, 1963) [frail-die-early]
+%   \scitet{frail-die-early}{proschan1963}    -> Proschan (1963) [frail-die-early]
+%   ... or decorate any cite manually:  \citep{key}\slug{some-slug}
+%
+% In the bibliography (addressed-block format):
+%   \bibitem[Proschan(1963)]{proschan1963}
+%   \bibblock{Proschan (1963)}%
+%     {Proschan1963:frail-die-early}%
+%     {Proschan, F. (1963). Theoretical Explanation of Observed Decreasing
+%      Failure Rate. \emph{Technometrics}, 5(3), 375--383.
+%      URL: \url{https://doi.org/10.1080/00401706.1963.10490105}}%
+%     {a mixture of subpopulations each failing at its own constant rate
+%      always shows decreasing aggregate hazard --- the frail die early.}
+%
+% Recommended: state the convention once, before the reference list, with
+% \slugconvention (below), so the format reads as design, not accident.
+% ============================================================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{seedslugs}[2026/07/02 v1.0 seed-slug citation standard]
+
+\newif\ifslugs \slugstrue
+\DeclareOption{off}{\slugsfalse}
+\ProcessOptions\relax
+
+% the slug tag itself
+\newcommand{\slug}[1]{\ifslugs\,{\small\textit{[#1]}}\fi}
+
+% convenience citation forms (natbib)
+\newcommand{\scite}[2]{\citep{#2}\slug{#1}}
+\newcommand{\scitet}[2]{\citet{#2}\slug{#1}}
+\newcommand{\scitealp}[2]{\citealp{#2}\slug{#1}}
+
+% addressed bibliography block:
+% #1 heading "Author (Year)"  #2 permanent key "AuthorYear:slug"
+% #3 full citation incl. URL  #4 seed sentence (without "Seed:")
+\newcommand{\bibblock}[4]{%
+  \textbf{#1}\\
+  {\small\texttt{[#2]}}\\
+  #3\\
+  \emph{Seed: #4}}
+
+% the convention statement, ready to drop before \begin{thebibliography}
+\newcommand{\slugconvention}{%
+\subsection*{Citation convention}
+A paper arguing that addressable geometry is what makes a store usable should
+practice the argument in its own references. Every reference below carries
+(i) a resolvable permalink (DOI or arXiv), so that each citation is a
+dereferenceable address rather than a search task, (ii) a kebab-case
+\emph{seed slug} --- a 3--5 word, machine-greppable, human-readable
+compression of the result this paper uses --- and (iii) a one-sentence
+\emph{truth seed} expanding the slug. In the text, every citation carries its
+slug at every occurrence, so the claim travels to each use site and the reader
+never holds an unexplained pointer. Slugs are structure-preserving isomorphs
+of the cited result within this paper's context, not canonical global names.
+The slug layer collapses for conservative venues via a single package option.
+In the list below, each entry is an addressed block: an author--year heading,
+the entry's permanent key \texttt{[AuthorYear:slug]}, the full citation with
+its URL, and the seed.}
+
+% first-use footnote, to attach to the first slugged citation in a paper:
+% ...\scite{lost-in-the-middle}{liu2024lost}\slugfootnote
+\newcommand{\slugfootnote}{\ifslugs\footnote{Bracketed tags after citations
+are \emph{seed slugs}: 3--5 word compressions of the cited result as used in
+this paper, so the claim travels with the pointer. The full convention,
+including each reference's permanent key and one-sentence seed, is stated
+before the reference list.}\fi}
+
+\endinput

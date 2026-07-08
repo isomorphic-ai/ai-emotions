@@ -1,0 +1,5 @@
+Build (single source, single paper PDF):
+  paper: pdflatex -jobname=infinite-context-main infinite-context-academic.tex  (x2)
+  raw case records: pdflatex appendices-standalone.tex  (x2)
+Toggle: \\slugsfalse in preamble collapses seed-slugs for conservative venues.
+Paper appendix = structure-preserving summaries; unabridged records = appendices.tex (this repo + Zenodo source upload).

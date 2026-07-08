@@ -1,0 +1,28 @@
+% Minimal working example of the seed-slug standard
+\documentclass[11pt]{article}
+\usepackage[round]{natbib}
+\usepackage{url}
+\usepackage{seedslugs}   % or [off] for conservative venues
+
+\begin{document}
+
+A mixture of exponential survivals with heterogeneous rates exhibits
+decreasing aggregate hazard \scite{frail-die-early}{proschan1963}, so
+aggregate benchmark curves should show Weibull shape $k \le 1$.\slugfootnote
+
+\slugconvention
+
+\begin{thebibliography}{Proschan1963}
+\setlength{\itemsep}{7pt}
+
+\bibitem[Proschan(1963)]{proschan1963}
+\bibblock{Proschan (1963)}%
+  {Proschan1963:frail-die-early}%
+  {Proschan, F. (1963). Theoretical Explanation of Observed Decreasing
+   Failure Rate. \emph{Technometrics}, 5(3), 375--383.
+   URL: \url{https://doi.org/10.1080/00401706.1963.10490105}}%
+  {a mixture of subpopulations each failing at its own constant rate always
+   shows decreasing aggregate hazard --- the frail die early.}
+
+\end{thebibliography}
+\end{document}
